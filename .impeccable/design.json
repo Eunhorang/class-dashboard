@@ -1,0 +1,546 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-21T00:00:00+09:00",
+  "title": "Design System: 학급 대시보드",
+  "extensions": {
+    "colorMeta": {
+      "paper": {
+        "role": "neutral",
+        "displayName": "종이",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "paper-2": {
+        "role": "neutral",
+        "displayName": "옅은 종이",
+        "canonical": "#f4f5f7",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#252526",
+          "#414243",
+          "#606163",
+          "#818284",
+          "#a4a5a6",
+          "#c8c9ca",
+          "#eeeeef"
+        ]
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "먹",
+        "canonical": "#1e2228",
+        "tonalRamp": [
+          "#0a0b0e",
+          "#232529",
+          "#3f4247",
+          "#5d6268",
+          "#7e838a",
+          "#a1a5ab",
+          "#c6c9cf",
+          "#eceff3"
+        ]
+      },
+      "ink-hover": {
+        "role": "neutral",
+        "displayName": "눌린 먹",
+        "canonical": "#363d45",
+        "tonalRamp": [
+          "#090b0f",
+          "#21252a",
+          "#3d4349",
+          "#5b626a",
+          "#7c838c",
+          "#9fa6ad",
+          "#c4cad0",
+          "#ebeff4"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "연한 먹",
+        "canonical": "#474f58",
+        "tonalRamp": [
+          "#080b0f",
+          "#21262b",
+          "#3d434a",
+          "#5a626b",
+          "#7b838c",
+          "#9fa6ae",
+          "#c4cad1",
+          "#eaeff4"
+        ]
+      },
+      "ink-3": {
+        "role": "neutral",
+        "displayName": "흐린 먹",
+        "canonical": "#6a727b",
+        "tonalRamp": [
+          "#090b0f",
+          "#21262a",
+          "#3d4349",
+          "#5b626a",
+          "#7c838c",
+          "#9fa6ad",
+          "#c4cad0",
+          "#eaeff4"
+        ]
+      },
+      "dim": {
+        "role": "neutral",
+        "displayName": "흐림",
+        "canonical": "#a9b0b8",
+        "tonalRamp": [
+          "#090b0e",
+          "#222529",
+          "#3e4248",
+          "#5c6269",
+          "#7d838a",
+          "#a0a6ac",
+          "#c5cacf",
+          "#ebeff3"
+        ]
+      },
+      "on-ink-muted": {
+        "role": "neutral",
+        "displayName": "먹 위 흐린 글자",
+        "canonical": "#d5d9de",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#242527",
+          "#404245",
+          "#5f6165",
+          "#808287",
+          "#a3a5a9",
+          "#c7c9cc",
+          "#edeef1"
+        ]
+      },
+      "rule": {
+        "role": "neutral",
+        "displayName": "괘선",
+        "canonical": "#dadde2",
+        "tonalRamp": [
+          "#0a0b0d",
+          "#242527",
+          "#404245",
+          "#5f6165",
+          "#808287",
+          "#a3a5a9",
+          "#c7c9cc",
+          "#edeef1"
+        ]
+      },
+      "field-line": {
+        "role": "neutral",
+        "displayName": "입력칸 선",
+        "canonical": "#868e97",
+        "tonalRamp": [
+          "#090b0e",
+          "#21252a",
+          "#3d4349",
+          "#5b626a",
+          "#7c838b",
+          "#9fa6ad",
+          "#c4cad0",
+          "#ebeff4"
+        ]
+      },
+      "quiet-line": {
+        "role": "neutral",
+        "displayName": "조용한 선",
+        "canonical": "#b9bfc7",
+        "tonalRamp": [
+          "#090b0e",
+          "#222529",
+          "#3e4247",
+          "#5d6268",
+          "#7e838a",
+          "#a1a5ab",
+          "#c6c9cf",
+          "#eceff3"
+        ]
+      },
+      "scroll-thumb": {
+        "role": "neutral",
+        "displayName": "스크롤 막대",
+        "canonical": "#c3c8cf",
+        "tonalRamp": [
+          "#090b0e",
+          "#222529",
+          "#3e4247",
+          "#5d6268",
+          "#7e838a",
+          "#a1a5ab",
+          "#c6c9cf",
+          "#eceff3"
+        ]
+      },
+      "stamp": {
+        "role": "primary",
+        "displayName": "인주 빨강",
+        "canonical": "#d2392c",
+        "tonalRamp": [
+          "#270000",
+          "#510000",
+          "#7f0704",
+          "#b02319",
+          "#d84c3e",
+          "#f47d6c",
+          "#ffaa9b",
+          "#ffd7ca"
+        ]
+      },
+      "blue": {
+        "role": "secondary",
+        "displayName": "볼펜 파랑",
+        "canonical": "#2d6cb0",
+        "tonalRamp": [
+          "#000a24",
+          "#01254a",
+          "#144374",
+          "#2a63a1",
+          "#4c85c6",
+          "#78a9e1",
+          "#a4cdfc",
+          "#d2f2ff"
+        ]
+      },
+      "disabled-ink": {
+        "role": "neutral",
+        "displayName": "쓸 수 없음",
+        "canonical": "#9aa1a9",
+        "tonalRamp": [
+          "#090b0e",
+          "#222529",
+          "#3e4248",
+          "#5c6269",
+          "#7d838a",
+          "#a0a6ac",
+          "#c5cacf",
+          "#ebeff3"
+        ]
+      },
+      "wheel-fill-a": {
+        "role": "neutral",
+        "displayName": "돌림판 흰 칸",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#424242",
+          "#616161",
+          "#828282",
+          "#a5a5a5",
+          "#c9c9c9",
+          "#eeeeee"
+        ]
+      },
+      "wheel-fill-b": {
+        "role": "neutral",
+        "displayName": "돌림판 회색 칸",
+        "canonical": "#f0f2f4",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#242526",
+          "#414243",
+          "#606163",
+          "#818284",
+          "#a4a5a7",
+          "#c8c9ca",
+          "#edeeef"
+        ]
+      },
+      "wheel-fill-c": {
+        "role": "neutral",
+        "displayName": "돌림판 홀수 마지막 칸",
+        "canonical": "#f7f8f9",
+        "tonalRamp": [
+          "#0b0b0b",
+          "#252525",
+          "#414243",
+          "#606162",
+          "#818283",
+          "#a4a5a6",
+          "#c8c9ca",
+          "#eeeeef"
+        ]
+      },
+      "wheel-fill-dim": {
+        "role": "neutral",
+        "displayName": "돌림판 멈춘 뒤 칸",
+        "canonical": "#f3f4f6",
+        "tonalRamp": [
+          "#0b0b0c",
+          "#252526",
+          "#414243",
+          "#606163",
+          "#818284",
+          "#a4a5a6",
+          "#c8c9ca",
+          "#eeeeef"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "label": {
+        "displayName": "라벨",
+        "purpose": "표 머리, 개수, 번호, 메타, 꼬리표, 도장 속 글자. 범위 0.72~0.92rem (0.72, 0.78, 0.8, 0.82, 0.85, 0.88, 0.9, 0.92)."
+      },
+      "body": {
+        "displayName": "본문",
+        "purpose": "설명문, 단추, 목차 항목, 표 칸. 범위 0.95~1.02rem (0.95, 0.98, 1, 1.02). 뿌리 크기 clamp(15px, calc(0.42vw + 9px), 20px)."
+      },
+      "list": {
+        "displayName": "목록",
+        "purpose": "목록 제목, 구역 제목, 행사·할 것 줄, 입력칸, 관찰 기록 본문. 범위 1.05~1.15rem (1.05, 1.08, 1.1, 1.15)."
+      },
+      "title": {
+        "displayName": "칸 이름",
+        "purpose": "체크 칸 이름, 시간표 표 과목, 큰 단추, 창 제목, 큰 개수. 범위 1.2~1.3rem (1.2, 1.25, 1.3)."
+      },
+      "headline": {
+        "displayName": "줄 제목",
+        "purpose": "시간표 띠 과목, 알림장 줄, 급훈, 목차 이름, 체크판 제목. 범위 1.4~1.6rem (1.4, 1.45, 1.5, 1.6)."
+      },
+      "display-sm": {
+        "displayName": "쪽 제목",
+        "purpose": "쪽 제목 1.75, 날짜 2, 운영비 금액 1.7, 크게 보기 알림장·급훈. 범위 1.7~2.2rem (1.7, 1.75, 1.8, 1.9, 2, 2.1, 2.2)."
+      },
+      "display": {
+        "displayName": "시계",
+        "purpose": "시계 2.9(TV 4), 뽑힌 이름 3.4, 업다운 줄 3, TV 날짜 2.6. 범위 2.6~4rem."
+      },
+      "stage": {
+        "displayName": "게임 무대",
+        "purpose": "초성 낱말 clamp(4rem, 11vw, 9rem)/TV clamp(6rem, 15vw, 14rem), 퀴즈 clamp(2rem, 4.4vw, 3.6rem)/TV clamp(2.6rem, 5vw, 4.8rem), 타이머 clamp(5rem, 16vw, 13rem)."
+      }
+    },
+    "shadows": [
+      {
+        "name": "hub",
+        "value": "0 0.45rem 1.2rem rgba(30, 34, 40, 0.24), inset 0 0 0 calc(var(--d) * 0.012) var(--ink), inset 0 0 0 calc(var(--d) * 0.016) rgba(255, 255, 255, 0.28)",
+        "purpose": "돌리기 원. 누르는 물건임을 보인다."
+      },
+      {
+        "name": "needle",
+        "value": "drop-shadow(0 2px 3px rgba(30, 34, 40, 0.28))",
+        "purpose": "3시 방향 바늘(filter)."
+      },
+      {
+        "name": "dialog",
+        "value": "0 1.5rem 3.5rem rgba(16, 19, 23, 0.3)",
+        "purpose": "창. 뒤 배경 rgba(30, 34, 40, 0.45)."
+      },
+      {
+        "name": "toast",
+        "value": "0 0.7rem 1.8rem rgba(16, 19, 23, 0.32)",
+        "purpose": "알림 띠."
+      },
+      {
+        "name": "rail-drawer",
+        "value": "0 0 2rem rgba(16, 19, 23, 0.2)",
+        "purpose": "860px 이하 목차 서랍. 뒤 배경 rgba(30, 34, 40, 0.4)."
+      },
+      {
+        "name": "stamp-ring",
+        "value": "inset 0 0 0 1.5px var(--paper), inset 0 0 0 2.5px rgba(210, 57, 44, 0.5)",
+        "purpose": "도장의 안쪽 둘째 고리(깊이가 아니라 도장 모양). 다 함 도장은 2px/3px."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-out",
+        "value": "cubic-bezier(0.2, 0.8, 0.2, 1)",
+        "purpose": "창 떠오르기 0.26s, 알림 0.28s, 목차 서랍 0.25s, 스위치 손잡이 0.18s, 돌리기 원."
+      },
+      {
+        "name": "ease-expo",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "도장 내려앉기 stamp-press 0.45s(체크 칸·1인1역), 뽑기 N번째 도장 0.5s 지연 0.1s. 1.9배·-30도에서 -12도로."
+      },
+      {
+        "name": "press",
+        "value": "background-color 0.15s ease, transform 0.1s ease",
+        "purpose": "단추 올림과 1px 내려앉기."
+      },
+      {
+        "name": "needle-kick",
+        "value": "17deg, exp decay 70ms",
+        "purpose": "칸 경계를 넘을 때마다 바늘이 튕겼다 잦아듦."
+      },
+      {
+        "name": "spin",
+        "value": "wind-back 7deg / 170ms, then ~5s ease-out",
+        "purpose": "돌리기 단추로 돌릴 때. 손으로 휙 돌리면 놓는 속도를 이어받음."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "animation/transition 0.01ms, needle still",
+        "purpose": "움직임 줄이기 설정."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "one-column",
+        "value": "max-width: 1100px"
+      },
+      {
+        "name": "drawer",
+        "value": "max-width: 860px"
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "주 단추",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "먹으로 채운 주 행동 단추. 한 영역에 하나.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">기록 쓰기</button>",
+      "css": ".ds-btn{appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:2.75rem;padding:0 1rem;border:1.5px solid var(--ink,#1e2228);border-radius:6px;background:var(--paper,#fff);color:var(--ink,#1e2228);font-family:\"Pretendard Variable\",Pretendard,system-ui,sans-serif;font-size:1rem;font-weight:700;line-height:1.2;cursor:pointer;transition:background-color .15s ease,transform .1s ease}.ds-btn-primary{background:var(--ink,#1e2228);color:#fff}.ds-btn-primary:hover{background:#363d45}.ds-btn:active{transform:translateY(1px)}.ds-btn:focus-visible{outline:2.5px solid var(--blue,#2d6cb0);outline-offset:2px}"
+    },
+    {
+      "name": "보조 단추",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "흰 바탕에 1.5px 먹 테두리. 덜 중요한 것은 조용한 선 테두리.",
+      "html": "<button class=\"ds-btn2\">이달 모아 보기</button> <button class=\"ds-btn2 ds-quiet\">고치기</button>",
+      "css": ".ds-btn2{appearance:none;display:inline-flex;align-items:center;min-height:2.75rem;padding:0 1rem;border:1.5px solid var(--ink,#1e2228);border-radius:6px;background:var(--paper,#fff);color:var(--ink,#1e2228);font-family:\"Pretendard Variable\",Pretendard,system-ui,sans-serif;font-size:1rem;font-weight:700;cursor:pointer;transition:background-color .15s ease,transform .1s ease}.ds-btn2:hover{background:var(--paper-2,#f4f5f7)}.ds-btn2:active{transform:translateY(1px)}.ds-btn2:focus-visible{outline:2.5px solid var(--blue,#2d6cb0);outline-offset:2px}.ds-quiet{border-color:#b9bfc7}"
+    },
+    {
+      "name": "입력칸",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "1.5px 옅은 선 입력칸, 초점에서 파랑.",
+      "html": "<input class=\"ds-input\" placeholder=\"내용 찾기\">",
+      "css": ".ds-input{min-height:2.75rem;width:18rem;padding:0 .8rem;border:1.5px solid var(--field-line,#868e97);border-radius:6px;background:var(--paper,#fff);color:var(--ink,#1e2228);caret-color:var(--blue,#2d6cb0);font-family:\"Pretendard Variable\",Pretendard,system-ui,sans-serif;font-size:1.05rem}.ds-input::placeholder{color:var(--ink-3,#6a727b);opacity:1}.ds-input:focus{border-color:var(--blue,#2d6cb0);outline:2.5px solid rgba(45,108,176,.25);outline-offset:0}"
+    },
+    {
+      "name": "목차",
+      "kind": "nav",
+      "refersTo": "nav-link-current",
+      "description": "괘선 세로 목록, 오른쪽 개수, 지금 화면은 먹 채움.",
+      "html": "<ul class=\"ds-nav\"><li><a class=\"ds-nl\" href=\"#\">오늘</a></li><li><a class=\"ds-nl\" href=\"#\" aria-current=\"page\">출결 <span class=\"ds-nb\">1</span></a></li><li><a class=\"ds-nl\" href=\"#\">과제 <span class=\"ds-nb\">2</span></a></li><li><a class=\"ds-nl\" href=\"#\">안내장 <span class=\"ds-nb\">1</span></a></li></ul>",
+      "css": ".ds-nav{list-style:none;margin:0;padding:0;width:13rem;border-top:2px solid var(--ink,#1e2228);font-family:\"Pretendard Variable\",Pretendard,system-ui,sans-serif}.ds-nl{display:flex;align-items:center;justify-content:space-between;min-height:2.6rem;padding:0 .6rem;border-bottom:1px solid var(--rule,#dadde2);color:var(--ink,#1e2228);font-size:1.02rem;font-weight:600;text-decoration:none}.ds-nl:hover{background:var(--paper-2,#f4f5f7)}.ds-nl[aria-current=\"page\"]{background:var(--ink,#1e2228);color:#fff;border-radius:6px;border-bottom-color:transparent}.ds-nb{font-size:.85rem;font-weight:700;color:var(--ink-3,#6a727b);font-variant-numeric:tabular-nums}.ds-nl[aria-current=\"page\"] .ds-nb{color:#d5d9de}.ds-nl:focus-visible{outline:2.5px solid var(--blue,#2d6cb0);outline-offset:2px}"
+    },
+    {
+      "name": "고르기 단추",
+      "kind": "chip",
+      "refersTo": "seg-option-selected",
+      "description": "먹 테두리 안의 4px 칸, 고른 칸은 먹 채움.",
+      "html": "<div class=\"ds-seg\"><button aria-pressed=\"true\">돌림판</button><button>순서 정하기</button><button>모둠 나누기</button></div>",
+      "css": ".ds-seg{display:inline-flex;gap:3px;padding:3px;border:1.5px solid var(--ink,#1e2228);border-radius:6px;background:#fff;font-family:\"Pretendard Variable\",Pretendard,system-ui,sans-serif}.ds-seg button{appearance:none;min-height:2.2rem;padding:0 .85rem;border:0;border-radius:4px;background:none;color:var(--ink,#1e2228);font:inherit;font-weight:700;cursor:pointer}.ds-seg button:hover{background:var(--paper-2,#f4f5f7)}.ds-seg button[aria-pressed=\"true\"]{background:var(--ink,#1e2228);color:#fff}.ds-seg button:focus-visible{outline:2.5px solid var(--blue,#2d6cb0);outline-offset:1px}"
+    },
+    {
+      "name": "시간표 띠",
+      "kind": "custom",
+      "refersTo": "period-now",
+      "description": "교시 칸이 가로로, 지금 교시 먹 채움, 지난 교시 흐림.",
+      "html": "<div class=\"ds-tt\"><div class=\"ds-p ds-past\"><span>1교시</span><b>국어</b><i>09:00</i></div><div class=\"ds-p ds-now\"><span>2교시</span><b>수학</b><i>09:50</i></div><div class=\"ds-p\"><span>3교시</span><b>영어</b><i>10:40</i></div><div class=\"ds-p\"><span>4교시</span><b>음악</b><i>11:30</i></div></div>",
+      "css": ".ds-tt{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);width:30rem;border-top:2px solid var(--ink,#1e2228);font-family:\"Pretendard Variable\",Pretendard,system-ui,sans-serif;color:var(--ink,#1e2228)}.ds-p{display:grid;gap:.15rem;padding:.7rem .55rem .8rem;border-right:1px solid var(--rule,#dadde2)}.ds-p:last-child{border-right:0}.ds-p span{font-size:.82rem;font-weight:600;color:var(--ink-3,#6a727b)}.ds-p b{font-size:1.5rem;font-weight:800;letter-spacing:-.02em}.ds-p i{font-style:normal;font-size:.82rem;color:var(--ink-3,#6a727b);font-variant-numeric:tabular-nums}.ds-past b{color:#a9b0b8}.ds-now{background:var(--ink,#1e2228);color:#fff;border-radius:0 0 8px 8px;border-right-color:transparent}.ds-now span,.ds-now i{color:#d5d9de}"
+    },
+    {
+      "name": "도장 체크 칸",
+      "kind": "custom",
+      "refersTo": "check-cell",
+      "description": "이름 칸을 누르면 빨간 작은 도장. 출결 기록 칸은 파란 테와 꼬리표.",
+      "html": "<div class=\"ds-board\"><button class=\"ds-cell ds-done\"><span class=\"ds-no\">1</span><span class=\"ds-nm\">김민준</span><span class=\"ds-st\">냄</span></button><button class=\"ds-cell\"><span class=\"ds-no\">2</span><span class=\"ds-nm\">이서연</span><span></span></button><button class=\"ds-cell ds-att\"><span class=\"ds-no\">23</span><span class=\"ds-nm ds-abs\">손현우</span><span class=\"ds-al\">결석·질병</span></button></div>",
+      "css": ".ds-board{display:grid;grid-template-columns:repeat(3,10.5rem);gap:.5rem;padding-top:.9rem;border-top:2px solid var(--ink,#1e2228);font-family:\"Pretendard Variable\",Pretendard,system-ui,sans-serif}.ds-cell{appearance:none;display:grid;grid-template-columns:1.7rem minmax(0,1fr) auto;align-items:center;gap:.4rem;min-height:3.5rem;padding:0 .55rem 0 .4rem;border:1.5px solid var(--rule,#dadde2);border-radius:8px;background:#fff;color:var(--ink,#1e2228);font:inherit;font-size:1.2rem;font-weight:700;text-align:left;cursor:pointer;transition:border-color .15s ease}.ds-cell:hover,.ds-done{border-color:var(--ink,#1e2228)}.ds-cell:focus-visible{outline:2.5px solid var(--blue,#2d6cb0);outline-offset:2px}.ds-no{font-size:.85rem;font-weight:600;color:var(--ink-3,#6a727b);text-align:right}.ds-st{display:inline-grid;place-items:center;width:2.3rem;height:2.3rem;border-radius:50%;border:2.5px solid var(--stamp,#d2392c);color:var(--stamp,#d2392c);font-size:.72rem;font-weight:800;transform:rotate(-12deg);box-shadow:inset 0 0 0 1.5px #fff,inset 0 0 0 2.5px rgba(210,57,44,.5)}.ds-att{border-color:var(--blue,#2d6cb0)}.ds-abs{color:var(--ink-3,#6a727b);text-decoration:line-through;text-decoration-color:var(--blue,#2d6cb0);text-decoration-thickness:2px}.ds-al{font-size:.8rem;font-weight:800;color:var(--blue,#2d6cb0)}"
+    },
+    {
+      "name": "아직 확인할 것 줄",
+      "kind": "custom",
+      "refersTo": "list-row",
+      "description": "D-day 칸, 굵은 제목과 꼬리, 남은 사람, 오른쪽 개수나 다 함 도장.",
+      "html": "<ul class=\"ds-todo\"><li><a href=\"#\"><b class=\"ds-w\">D-3</b><span><span class=\"ds-t\">독서록 쓰기<small>과제</small></span><span class=\"ds-who\">못 낸 사람: 양소율 · 손현우 외 1명</span></span><span class=\"ds-c\"><b>21</b>/25</span></a></li><li><a href=\"#\"><b class=\"ds-w\">오늘</b><span><span class=\"ds-t\">아침독서</span><span class=\"ds-who\">모두 읽었어요</span></span><span class=\"ds-done\">다 함</span></a></li></ul>",
+      "css": ".ds-todo{list-style:none;margin:0;padding:0;width:28rem;border-top:2px solid var(--ink,#1e2228);font-family:\"Pretendard Variable\",Pretendard,system-ui,sans-serif}.ds-todo a{display:grid;grid-template-columns:4.2rem minmax(0,1fr) auto;align-items:center;gap:.5rem;padding:.6rem .25rem;border-bottom:1px solid var(--rule,#dadde2);color:var(--ink,#1e2228);text-decoration:none}.ds-todo a:hover{background:var(--paper-2,#f4f5f7)}.ds-todo a:focus-visible{outline:2.5px solid var(--blue,#2d6cb0);outline-offset:2px}.ds-w{align-self:start;font-size:1.08rem;line-height:1.55;font-weight:800;font-variant-numeric:tabular-nums}.ds-t{display:block;font-size:1.08rem;line-height:1.55;font-weight:700}.ds-t small{font-size:.8rem;color:var(--ink-3,#6a727b);margin-left:.4rem;font-weight:600}.ds-who{display:block;font-size:.88rem;color:var(--ink-3,#6a727b)}.ds-c{font-size:.95rem;font-weight:600;color:var(--ink-3,#6a727b);font-variant-numeric:tabular-nums}.ds-c b{font-size:1.3rem;font-weight:800;color:var(--ink,#1e2228)}.ds-done{display:inline-grid;place-items:center;width:2.9rem;height:2.9rem;border-radius:50%;border:3px solid var(--stamp,#d2392c);color:var(--stamp,#d2392c);font-size:.78rem;font-weight:800;transform:rotate(-12deg);box-shadow:inset 0 0 0 2px #fff,inset 0 0 0 3px rgba(210,57,44,.5)}"
+    },
+    {
+      "name": "알림 띠",
+      "kind": "custom",
+      "refersTo": "toast",
+      "description": "아래 가운데에 뜨는 먹색 띠, 행동은 흰 밑줄 글자.",
+      "html": "<div class=\"ds-toast\">도장을 지웠어요 <button class=\"ds-undo\">되돌리기</button></div>",
+      "css": ".ds-toast{display:inline-flex;align-items:center;gap:1rem;padding:.75rem .85rem .75rem 1.15rem;border-radius:8px;background:var(--ink,#1e2228);color:#fff;font-family:\"Pretendard Variable\",Pretendard,system-ui,sans-serif;font-size:1rem;font-weight:600;box-shadow:0 .7rem 1.8rem rgba(16,19,23,.32)}.ds-undo{appearance:none;padding:.35rem .4rem;border:0;background:none;color:#fff;font:inherit;font-weight:800;text-decoration:underline;text-underline-offset:.2em;cursor:pointer}.ds-undo:focus-visible{outline:2.5px solid #9cc2ec;outline-offset:2px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "출석부와 칭찬 도장",
+    "overview": "화면은 흰 종이에 먹색 잉크로 쓴 학급 출석부다. 빙글빙글 돌림판에서 세운 세계를 그대로 이어받았고 대시보드는 여기에 목차와 하루 한 쪽을 더했다. 왼쪽에는 출석부 앞장 같은 목차가 세로로 서고 오른쪽에는 오늘 한 장이 놓인다. 글자와 괘선이 거의 모든 일을 맡으며 칸 나눔은 제목 아래 굵은 먹선과 줄 사이 옅은 괘선으로 해결된다.\n\n색은 둘만 일한다. 인주 빨강은 '확인됐다'는 표시, 곧 도장과 돌림판 바늘과 채점 O·X에 쓴다. 볼펜 파랑은 사람이 손으로 남긴 표시와 키보드로 다니는 길을 맡는다. 나머지는 모두 먹과 종이의 농담이다. 밝은 화면 하나만 둔다(`color-scheme: light`). 형광등 켜진 교실 앞 TV를 스무 명 남짓이 멀리서 볼 때 흰 바탕의 먹색 글씨가 가장 또렷했다.\n\n밀도는 장부처럼 촘촘하다. 대신 한 화면에서 고른 것 하나만 먹으로 채운다. 목차의 고른 항목, 지금 교시, 고른 목록 줄, 오늘 요일 칸이 그렇다. 체크는 어느 화면이든 학생 이름 칸을 눌러 빨간 도장을 찍는 손동작 하나로 통일된다. '크게 보기'를 켜면 목차가 사라지고 글자가 교실 뒤에서도 읽히는 크기로 커진다.",
+    "keyCharacteristics": [
+      "흰 종이, 먹색 잉크, 2px 먹선과 1px 괘선",
+      "빨강은 도장·바늘·채점 표시, 파랑은 손 표시·링크·초점",
+      "고른 것 하나는 먹색 채움, 지난 것은 흐린 회색",
+      "Pretendard 한 가지 글꼴, 여덟 단계 크기, 숫자는 고정폭",
+      "왼쪽 목차와 괘선으로 나눈 오늘 한 장, 같은 크기 카드 타일은 없음",
+      "서명 동작: 이름 칸을 누르면 도장이 1.9배에서 내려앉고 다 끝나면 '다 함'"
+    ],
+    "rules": [
+      {
+        "name": "The Two Inks Rule",
+        "body": "빨강은 '확인됐다', 파랑은 '사람이 손댔다'만 뜻한다. 두 색이 다른 뜻을 맡거나 세 번째 색이 들어오면 출석부가 무너진다. 오류, 경고, 모자람에도 빨강을 쓰지 않는다.",
+        "section": "colors"
+      },
+      {
+        "name": "The Ink Fill Rule",
+        "body": "지금 고른 것, 지금 진행 중인 것 하나만 먹으로 채운다. 목차 항목, 목록 줄, 지금 교시, 오늘 요일 칸, 고르기 단추의 고른 칸이 같은 방식이다. 지난 것은 흐림으로 물러난다.",
+        "section": "colors"
+      },
+      {
+        "name": "The Gray Wheel Rule",
+        "body": "돌림판 칸은 흰색과 옅은 회색 농담으로만 칠한다. 칸마다 다른 색을 넣지 않는다.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Face Rule",
+        "body": "글꼴은 Pretendard 하나다. 위계는 크기와 굵기로만 만든다.",
+        "section": "typography"
+      },
+      {
+        "name": "The Eight Steps Rule",
+        "body": "새 글자 크기는 여덟 단계의 대표값에서 고른다. 범위 안이라고 새 값을 더 만들지 않는다.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Number Rule",
+        "body": "줄을 맞춰 읽는 숫자(번호, 개수, 시각, 시계, D-day, 날짜, 금액, 타이머)는 모두 고정폭 숫자로 쓴다.",
+        "section": "typography"
+      },
+      {
+        "name": "The Paper Stays Flat Rule",
+        "body": "표, 목록 줄, 체크 칸, 단추, 입력칸에는 그림자가 없다. 그림자는 손으로 잡는 것과 종이 위에 떠오르는 것에만 쓴다.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "**Do** 빨강(stamp)은 도장·바늘·채점 O·X에만, 파랑(blue)은 손으로 남긴 표시·링크·초점에만 쓴다.",
+      "**Do** 지금 고른 것과 지금 진행 중인 것 하나만 먹으로 채우고 지난 것은 흐림(dim)으로 물린다.",
+      "**Do** 체크는 학생 이름 칸을 눌러 도장을 찍고 다시 눌러 지우는 한 가지 손동작으로 만든다.",
+      "**Do** 도장은 이름이나 글자 옆에 나란히 찍는다. 글자 위에 겹치면 끝 음절 모음이 가려 '한수아'가 '한수이'로 읽힌다.",
+      "**Do** 목록은 2px 먹선 아래 같은 문법의 줄로 채우고 줄 사이는 1px 괘선으로 나눈다.",
+      "**Do** 숫자는 고정폭 숫자로 쓴다.",
+      "**Do** 먹으로 채운 주 단추는 한 영역(쪽 머리, 창, 결과 줄)에 하나만 둔다.",
+      "**Do** 새 글자 크기는 여덟 단계의 대표값을 rem으로 써서 clamp 뿌리 크기를 따라 TV에서 커지게 한다.",
+      "**Do** 새 화면에는 '크게 보기'에서 키울 글자와 숨길 교사용 단추를 함께 정한다."
+    ],
+    "donts": [
+      "**Don't** 기능이나 요약을 같은 크기 카드 타일로 바둑판처럼 늘어놓지 않는다. 구획은 괘선으로 나눈다. 학생 이름 칸을 바둑판으로 놓는 체크판은 출석부 칸이라 여기에 들지 않는다.",
+      "**Don't** 오류, 경고, 모자란 금액, 시간 초과를 빨강으로 칠하지 않는다. 빨강은 확인됐다는 뜻 하나다.",
+      "**Don't** 돌림판 칸에 무지개 원색을 칠하지 않는다. 흰색과 옅은 회색 농담만 쓴다.",
+      "**Don't** 뽑힌 순간이나 다 끝난 순간에 색종이, 번쩍임, 게임쇼 같은 효과를 넣지 않는다. 축하는 소리와 도장이 맡는다.",
+      "**Don't** 어두운 화면을 따로 만들지 않는다. 밝은 화면 하나다.",
+      "**Don't** 두 번째 글꼴을 들이지 않는다.",
+      "**Don't** 표, 목록 줄, 체크 칸, 단추, 입력칸에 그림자를 주지 않는다.",
+      "**Don't** 아이콘 묶음이나 글리프 아이콘을 들이지 않는다. 필요한 선 아이콘은 같은 격자와 선 굵기로 직접 그린다."
+    ]
+  }
+}

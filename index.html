@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>학급 대시보드</title>
+  <meta name="description" content="초등학교 학급 운영을 한 화면에: 오늘 시간표와 알림장, 과제·안내장·아침독서·1인1역·미션 체크, 학급운영비, 행사, 학습 사이트, 학급 전체 웹게임과 돌림판. 로그인 없이 쓰는 한국어 학급 대시보드예요.">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="color-scheme" content="light">
+  <meta name="apple-mobile-web-app-title" content="학급 대시보드">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="학급 대시보드">
+  <meta property="og:description" content="오늘 시간표와 알림장, 과제·안내장·아침독서 체크, 학급운영비, 웹게임까지 한 화면에 모은 학급 대시보드.">
+  <meta property="og:image" content="https://eunhorang.github.io/class-dashboard/og.png?v=1">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:url" content="https://eunhorang.github.io/class-dashboard/">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="stylesheet" href="fonts/pretendard/pretendard.css?v=1">
+  <link rel="stylesheet" href="css/style.css?v=1">
+</head>
+<body>
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5.5v13M5.5 12h13"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5.5 12h13"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.6 4.4 4.3L19 7.4"/></symbol>
+    <symbol id="i-left" viewBox="0 0 24 24"><path d="M14.5 6 8.5 12l6 6"/></symbol>
+    <symbol id="i-right" viewBox="0 0 24 24"><path d="m9.5 6 6 6-6 6"/></symbol>
+    <symbol id="i-down" viewBox="0 0 24 24"><path d="M6.5 9.5 12 15l5.5-5.5"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4.5 7h15M4.5 12h15M4.5 17h15"/></symbol>
+    <symbol id="i-sound" viewBox="0 0 24 24"><path d="M4 9.5h3.2L12 5.6v12.8l-4.8-3.9H4z"/><path d="M15.6 9.2a4 4 0 0 1 0 5.6M18.3 6.6a7.7 7.7 0 0 1 0 10.8"/></symbol>
+    <symbol id="i-mute" viewBox="0 0 24 24"><path d="M4 9.5h3.2L12 5.6v12.8l-4.8-3.9H4z"/><path d="M16 9.6l4.8 4.8M20.8 9.6 16 14.4"/></symbol>
+    <symbol id="i-open" viewBox="0 0 24 24"><path d="M13.5 5.5h5v5M18.5 5.5l-8 8M16.5 13.5v5h-11v-11h5"/></symbol>
+    <symbol id="i-up-arrow" viewBox="0 0 24 24"><path d="M12 19V5M5.5 11.5 12 5l6.5 6.5"/></symbol>
+    <symbol id="i-down-arrow" viewBox="0 0 24 24"><path d="M12 5v14M5.5 12.5 12 19l6.5-6.5"/></symbol>
+    <symbol id="i-o" viewBox="0 0 24 24"><circle cx="12" cy="12" r="7.5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"/></symbol>
+  </svg>
+
+  <div class="shell">
+    <aside class="rail" aria-label="목차">
+      <div class="rail-head">
+        <p class="rail-title" id="railTitle">우리 반</p>
+        <p class="rail-year" id="railYear"></p>
+      </div>
+      <nav aria-label="기능">
+        <ul class="nav" id="navList"></ul>
+      </nav>
+      <div class="rail-foot">
+        <a class="nav-link" id="settingsLink" href="#/settings"><span class="nav-label">설정</span></a>
+        <button class="btn quiet sm" id="bigBtn" type="button">크게 보기</button>
+      </div>
+    </aside>
+    <div class="nav-scrim" id="navScrim"></div>
+
+    <header class="topbar">
+      <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-label="목차 열기">
+        <svg class="i" aria-hidden="true"><use href="#i-menu"/></svg><span>목차</span>
+      </button>
+      <span class="topbar-title" id="topTitle"></span>
+    </header>
+
+    <div class="main-col">
+      <div class="sample-bar" id="sampleBar" hidden>
+        <p>지금 보이는 학생과 일정은 둘러보기용 예시예요.</p>
+        <button class="text-btn" id="clearSampleBtn" type="button">예시 지우고 우리 반으로 시작하기</button>
+      </div>
+      <main class="main" id="main" tabindex="-1"></main>
+    </div>
+  </div>
+
+  <button class="big-exit btn" id="bigExit" type="button" hidden>작게 보기</button>
+
+  <dialog class="dlg" id="confirmDlg" aria-labelledby="confirmTitle">
+    <div class="dlg-head"><h2 id="confirmTitle">확인</h2></div>
+    <div class="dlg-body">
+      <p class="lead-text"></p>
+      <div class="row-btns end">
+        <button class="btn" type="button" data-cancel>취소</button>
+        <button class="btn primary" type="button" data-ok>확인</button>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="dlg" id="formDlg" aria-labelledby="formTitle">
+    <div class="dlg-head">
+      <h2 id="formTitle"></h2>
+      <button class="icon-btn" type="button" aria-label="닫기" data-close><svg class="i" aria-hidden="true"><use href="#i-close"/></svg></button>
+    </div>
+    <div class="dlg-body"></div>
+  </dialog>
+
+  <div class="toast" id="toast" popover="manual" role="status" aria-live="polite">
+    <span id="toastMsg"></span>
+    <button type="button" id="toastAction" hidden></button>
+  </div>
+  <div class="sr-only" id="announce" aria-live="assertive"></div>
+
+  <noscript><p class="noscript">학급 대시보드는 자바스크립트를 켜야 쓸 수 있어요.</p></noscript>
+
+  <script src="js/core/util.js?v=1"></script>
+  <script src="js/core/korean.js?v=1"></script>
+  <script src="js/core/store.js?v=1"></script>
+  <script src="js/core/sound.js?v=1"></script>
+  <script src="js/core/wheel.js?v=1"></script>
+  <script src="js/core/ui.js?v=1"></script>
+  <script src="js/app.js?v=1"></script>
+  <script src="js/modules/home.js?v=1"></script>
+  <script src="js/modules/timetable.js?v=1"></script>
+  <script src="js/modules/notice.js?v=1"></script>
+  <script src="js/modules/attendance.js?v=1"></script>
+  <script src="js/modules/checks.js?v=1"></script>
+  <script src="js/modules/reading.js?v=1"></script>
+  <script src="js/modules/roles.js?v=1"></script>
+  <script src="js/modules/students.js?v=1"></script>
+  <script src="js/modules/notes.js?v=1"></script>
+  <script src="js/modules/budget.js?v=1"></script>
+  <script src="js/modules/events.js?v=1"></script>
+  <script src="js/modules/links.js?v=1"></script>
+  <script src="js/modules/games.js?v=1"></script>
+  <script src="js/modules/pick.js?v=1"></script>
+  <script src="js/modules/timer.js?v=1"></script>
+  <script src="js/modules/settings.js?v=1"></script>
+  <script src="js/start.js?v=1"></script>
+</body>
+</html>

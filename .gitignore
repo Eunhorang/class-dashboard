@@ -1,0 +1,9 @@
+.DS_Store
+.impeccable/mocks/
+.impeccable/review/
+.impeccable/build/
+.impeccable/live/
+.impeccable/surfaces/
+.impeccable/hook.cache.json
+.impeccable/config.local.json
+.impeccable/questions/

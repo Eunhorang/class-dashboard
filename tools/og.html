@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+<head><meta charset="utf-8"><title>학급 대시보드 공유 그림</title>
+<link rel="stylesheet" href="../fonts/pretendard/pretendard.css?v=1">
+<style>
+  *{box-sizing:border-box} html,body{margin:0;width:1200px;height:630px;overflow:hidden;background:#fff;color:#1E2228;font-family:"Pretendard Variable",Pretendard,sans-serif;word-break:keep-all}
+  .page{position:relative;width:1200px;height:630px;border-top:14px solid #1E2228;display:grid;grid-template-columns:520px 1fr;gap:52px;padding:70px 60px 0}
+  h1{margin:0;font-size:78px;font-weight:800;letter-spacing:-.035em;line-height:1.05}
+  p{margin:22px 0 0;font-size:29px;font-weight:600;color:#474F58;line-height:1.45}
+  ul{list-style:none;margin:34px 0 0;padding:0;border-top:3px solid #1E2228}
+  li{display:flex;gap:16px;align-items:center;height:54px;border-bottom:1.5px solid #DADDE2;font-size:25px;font-weight:700}
+  li span{width:28px;font-size:19px;font-weight:600;color:#6A727B;text-align:right}
+  .sheet{border-top:3px solid #1E2228;padding-top:18px}
+  .sheet h2{margin:0 0 12px;font-size:24px;font-weight:800}
+  .row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:10px}
+  .cell{height:58px;border:2px solid #DADDE2;border-radius:9px;display:flex;align-items:center;justify-content:space-between;padding:0 10px 0 14px;font-size:21px;font-weight:700}
+  .cell.d{border-color:#1E2228}
+  .st{width:38px;height:38px;border-radius:50%;border:3px solid #D2392C;color:#D2392C;font-size:12px;font-weight:800;display:grid;place-items:center;transform:rotate(-12deg)}
+  .sheet h2{display:flex;justify-content:space-between;align-items:baseline}.sheet h2 small{font-size:19px;font-weight:700;color:#6A727B}.sheet h2 small b{font-size:30px;color:#1E2228}
+  .count b{font-size:34px;color:#1E2228}
+</style></head>
+<body>
+<!-- 링크 공유 미리보기(og.png) 원본. 예시 이름은 지어낸 것. -->
+<div class="page">
+  <div>
+    <h1>학급 대시보드</h1>
+    <p>오늘 시간표와 알림장, 여러 체크를<br>한 화면에서 도장 찍듯 끝내요</p>
+    <ul>
+      <li><span>1</span>과제 · 안내장 · 아침독서 · 1인1역 · 미션</li>
+      <li><span>2</span>학급운영비, 행사, 학습 사이트</li>
+      <li><span>3</span>초성 퀴즈 · 업다운 · 돌림판 같은 학급 게임</li>
+    </ul>
+  </div>
+  <div class="sheet">
+    <h2>현장체험학습 동의서 <small><b>17</b>/20 냈어요</small></h2>
+    <div class="row"><div class="cell d">민준<i class="st">냄</i></div><div class="cell d">서연<i class="st">냄</i></div><div class="cell d">도윤<i class="st">냄</i></div><div class="cell d">하은<i class="st">냄</i></div></div>
+    <div class="row"><div class="cell d">지호<i class="st">냄</i></div><div class="cell d">서아<i class="st">냄</i></div><div class="cell d">시우<i class="st">냄</i></div><div class="cell">하윤</div></div>
+    <div class="row"><div class="cell d">예준<i class="st">냄</i></div><div class="cell d">지우<i class="st">냄</i></div><div class="cell d">수아<i class="st">냄</i></div><div class="cell">은우</div></div>
+    <div class="row"><div class="cell d">지아<i class="st">냄</i></div><div class="cell d">유준<i class="st">냄</i></div><div class="cell d">채원<i class="st">냄</i></div><div class="cell d">이안<i class="st">냄</i></div></div>
+    <div class="row"><div class="cell d">다은<i class="st">냄</i></div><div class="cell">주원</div><div class="cell d">서진<i class="st">냄</i></div><div class="cell d">예린<i class="st">냄</i></div></div>
+  </div>
+</div>
+</body></html>
