@@ -110,6 +110,13 @@
         h('div', { class: 'field', style: { 'grid-column': '1 / -1' } }, h('label', { for: 'setMotto', text: '급훈 (오늘 화면 가운데에 보여요)' }), motto),
         h('div', { class: 'row-btns', style: { 'grid-column': '1 / -1' } }, h('button', { type: 'submit', class: 'btn primary', text: '저장' }))));
 
+    // 자료가 어디에 남는지 설정 맨 위에서 먼저 알린다. 바깥 전송은 index.html의 보안 규칙(CSP)이 막는다
+    const local = h('section', { class: 'section' },
+      h('h2', { text: '자료가 저장되는 곳' }),
+      h('div', { class: 'ruled', style: { 'padding-top': '0.8rem', display: 'grid', gap: '0.5rem' } },
+        h('p', { class: 'help', text: '입력한 내용은 이 컴퓨터의 브라우저에만 저장되고 밖으로 나가지 않아요. 학생 이름, 출결, 관찰 기록을 포함한 어떤 자료도 인터넷으로 보내지 않아요.' }),
+        h('p', { class: 'help small', text: '브라우저가 다른 곳으로 자료를 보내지 못하게 막아 두었어요. 자료가 이 컴퓨터를 떠나는 때는 직접 백업 파일이나 CSV 파일로 저장하거나 인쇄할 때뿐이에요.' })));
+
     const features = h('section', { class: 'section' },
       h('h2', { text: '쓰는 기능' }),
       h('p', { class: 'help small', style: { 'margin-bottom': '0.6rem' }, text: '끈 기능은 목차와 오늘 화면에서 사라져요. 다시 켜면 적어 둔 자료가 그대로 나와요.' }),
@@ -147,7 +154,7 @@
         h('p', { class: 'help', text: '로그인도 서버도 없어요. 학생 이름과 기록은 어디에도 보내지 않고 방문 기록도 모으지 않아요. 뽑기와 게임의 무작위는 브라우저의 암호용 난수로 정해요.' }),
         h('p', { class: 'help' }, h('a', { href: 'https://github.com/Eunhorang/class-dashboard', target: '_blank', rel: 'noopener', text: 'GitHub에서 소스 보기' }), ' · ', h('a', { href: 'https://eunhorang.github.io/bingle-wheel/', target: '_blank', rel: 'noopener', text: '빙글빙글 돌림판' }))));
 
-    root.append(CD.ui.page('설정', [], h('div', { class: 'settings' }, profile, features, sound, backup, year2, about)));
+    root.append(CD.ui.page('설정', [], h('div', { class: 'settings' }, local, profile, features, sound, backup, year2, about)));
   }
 
   CD.modules.register({ id: 'settings', title: '설정', group: 'manage', order: 999, always: true, bottom: true, render });

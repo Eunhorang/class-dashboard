@@ -3,6 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <!-- 입력한 자료가 밖으로 나가지 않게 막는다: 이 주소의 파일만 읽고, 다른 곳으로는 아무것도 보내지 못한다 -->
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'">
   <title>학급 대시보드</title>
   <meta name="description" content="초등학교 학급 운영을 한 화면에: 오늘 시간표와 알림장, 과제·안내장·아침독서·1인1역·미션 체크, 학급운영비, 행사, 학습 사이트, 학급 전체 웹게임과 돌림판. 로그인 없이 쓰는 한국어 학급 대시보드예요.">
   <meta name="theme-color" content="#ffffff">
@@ -124,7 +126,7 @@
   <script src="js/modules/games.js?v=1"></script>
   <script src="js/modules/pick.js?v=1"></script>
   <script src="js/modules/timer.js?v=1"></script>
-  <script src="js/modules/settings.js?v=1"></script>
+  <script src="js/modules/settings.js?v=2"></script>
   <script src="js/start.js?v=1"></script>
 </body>
 </html>

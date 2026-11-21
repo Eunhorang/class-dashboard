@@ -3,7 +3,7 @@
  * 한 번 열어 두면 교실 인터넷이 끊겨도 저장해 둔 화면으로 열린다.
  * 파일을 고쳐 올릴 때는 CACHE 끝 숫자와, index.html·아래 목록의 ?v= 숫자를 함께 올린다.
  */
-const CACHE = 'class-dashboard-v2';
+const CACHE = 'class-dashboard-v3';
 const FONT_CACHE = 'class-dashboard-fonts-v1';
 const ASSETS = [
   './',
@@ -32,7 +32,7 @@ const ASSETS = [
   './js/modules/games.js?v=1',
   './js/modules/pick.js?v=1',
   './js/modules/timer.js?v=1',
-  './js/modules/settings.js?v=1',
+  './js/modules/settings.js?v=2',
   './js/start.js?v=1',
   './manifest.webmanifest',
   './icons/icon.svg',
