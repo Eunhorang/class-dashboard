@@ -2,11 +2,13 @@
  * 학생 명단 — 모든 체크와 게임이 함께 쓰는 명단
  * 엑셀·나이스에서 복사한 명단을 붙여 넣으면 번호 칸은 빼고 이름만 들어간다.
  * 전학 간 학생은 '전학'으로 표시해 체크에서 빼고, 지난 기록은 남겨 둔다.
+ * '명단 인쇄'는 A4 한 장짜리 명렬표를 만든다. 확인용 빈칸을 붙이면 종이 체크표로 쓸 수 있다.
  */
 (function (CD) {
   'use strict';
 
   const h = CD.h;
+  const D = CD.date;
   const store = CD.store;
 
   function nextNo() {
@@ -96,6 +98,64 @@
     CD.ui.toast('가나다순으로 번호를 다시 매겼어요.', { action: '되돌리기', fn: () => { s.students.forEach((k, i) => { k.no = before[i]; }); store.save(); CD.refresh(); } });
   }
 
+  /* ---------- 명단 인쇄 ---------- */
+  function printForm() {
+    const s = store.state;
+    const hasLeft = s.students.some((k) => k.left);
+    CD.ui.form({
+      title: '명단 인쇄',
+      submit: '인쇄하기',
+      fields: [
+        { name: 'title', label: '제목', value: (s.profile.title || '우리 반') + ' 학생 명단', required: true, maxlength: 60, wide: true },
+        { name: 'cols', label: '확인용 빈칸', type: 'seg', value: '0', options: [{ value: '0', label: '없음' }, { value: '5', label: '5칸' }, { value: '8', label: '8칸' }, { value: '12', label: '12칸' }], hint: '안내장 회수나 과제 확인을 종이에 표시할 때 붙여요. 칸 머리는 비워 두니 손으로 적어요.', wide: true },
+        { name: 'more', label: '함께 넣을 것', type: 'checks', value: [], options: [{ value: 'memo', label: '메모' }].concat(hasLeft ? [{ value: 'left', label: '전학 간 학생' }] : []), hint: '메모는 선생님만 보는 내용이라 꼭 필요할 때만 넣어요.', wide: true },
+      ],
+      onSubmit(v) {
+        const opt = { title: v.title.slice(0, 60), cols: Number(v.cols) || 0, memo: v.more.includes('memo'), left: v.more.includes('left') };
+        // 창이 닫힌 뒤에 인쇄 창을 연다
+        setTimeout(() => printRoster(opt), 60);
+      },
+    });
+  }
+
+  function printRoster(o) {
+    const s = store.state;
+    const kids = s.students.filter((k) => o.left || !k.left).sort((a, b) => a.no - b.no || CD.ko.collator.compare(a.name, b.name));
+    const blanks = Array.from({ length: o.cols }, () => null);
+    const plain = !o.cols && !o.memo;
+    // 한 장(A4 세로, 위아래 여백과 머리를 빼면 약 248mm)에 들어가게 줄 높이를 정한다.
+    // 40명쯤까지 한 장에 들어가고, 더 많으면 다음 장으로 넘어가며 머리줄이 다시 찍힌다
+    const rowMm = Math.min(11, Math.max(5.8, (246 - kids.length * 0.2) / Math.max(1, kids.length)));
+    const table = h('table', { class: 'pr-table' + (plain ? ' is-plain' : '') },
+      h('thead', null, h('tr', null,
+        h('th', { class: 'pr-no', text: '번호' }),
+        h('th', { class: 'pr-name', text: '이름' }),
+        o.memo ? h('th', { class: 'pr-memo', text: '메모' }) : null,
+        blanks.map(() => h('th', { class: 'pr-blank' })))),
+      h('tbody', null, kids.map((k) => h('tr', null,
+        h('td', { class: 'pr-no', text: String(k.no) }),
+        h('td', { class: 'pr-name' }, k.name, k.left ? h('small', { text: ' 전학' }) : null),
+        o.memo ? h('td', { class: 'pr-memo', text: k.note || '' }) : null,
+        blanks.map(() => h('td', { class: 'pr-blank' }))))));
+    table.style.setProperty('--pr-row', rowMm.toFixed(1) + 'mm');
+    const area = h('section', { id: 'printArea', class: 'print-area', aria: { hidden: 'true' } },
+      h('header', { class: 'pr-head' },
+        h('h1', { text: o.title }),
+        h('p', { text: [s.profile.year, kids.length + '명', D.iso().replace(/-/g, '. ') + '.'].filter(Boolean).join(' · ') })),
+      table);
+    const old = document.getElementById('printArea');
+    if (old) old.remove();
+    document.body.append(area);
+    document.body.classList.add('printing');
+    const done = () => {
+      window.removeEventListener('afterprint', done);
+      document.body.classList.remove('printing');
+      area.remove();
+    };
+    window.addEventListener('afterprint', done);
+    window.print();
+  }
+
   function render(root) {
     const s = store.state;
     const list = s.students.slice().sort((a, b) => a.no - b.no || CD.ko.collator.compare(a.name, b.name));
@@ -103,6 +163,7 @@
       CD.ui.btn('학생 넣기', addForm, 'primary'),
       store.wheelLists().length ? CD.ui.btn('돌림판 목록 불러오기', importWheel) : null,
       list.length > 1 ? CD.ui.btn('가나다순 번호 매기기', renumber, 'quiet') : null,
+      list.length ? CD.ui.btn('명단 인쇄', printForm, 'quiet') : null,
     ].filter(Boolean);
     if (!list.length) {
       root.append(CD.ui.page('학생 명단', actions, CD.ui.empty('아직 학생이 없어요', '엑셀이나 나이스에서 번호와 이름 칸을 복사해 ‘학생 넣기’에 붙여 넣으면 한꺼번에 들어가요.', CD.ui.btn('학생 넣기', addForm, 'primary'))));

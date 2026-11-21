@@ -519,6 +519,33 @@ dialog { color: var(--ink); }
 .toast button { appearance: none; padding: 0.35rem 0.4rem; border: 0; background: none; color: #fff; font: inherit; font-weight: 800; text-decoration: underline; text-underline-offset: 0.2em; cursor: pointer; }
 .noscript { padding: 2rem; text-align: center; font-size: 1.2rem; }
 
+/* ---------- 명단 인쇄 (학생 명단 → 명단 인쇄) ----------
+ * 화면에서는 숨겨 두고, 인쇄할 때만 이 장 하나만 찍는다. 단위는 종이에 맞춰 mm·pt를 쓴다. */
+.print-area { display: none; }
+@media print {
+  @page { size: A4 portrait; margin: 14mm 14mm 16mm; }
+  body.printing > *:not(#printArea) { display: none !important; }
+  body.printing .print-area { display: block; color: #000; background: #fff; }
+  .pr-head { display: flex; align-items: baseline; justify-content: space-between; gap: 6mm; padding-bottom: 2.5mm; border-bottom: 0.6mm solid #000; }
+  .pr-head h1 { font-size: 17pt; font-weight: 800; letter-spacing: -0.02em; line-height: 1.25; }
+  .pr-head p { font-size: 9.5pt; color: #333; white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .pr-table { width: 100%; border-collapse: collapse; table-layout: fixed; font-size: 11pt; line-height: 1.2; }
+  .pr-table.is-plain { width: 110mm; }
+  .pr-table thead { display: table-header-group; }
+  .pr-table tr { break-inside: avoid; }
+  .pr-table th { height: 8mm; padding: 0 2mm; border-bottom: 0.35mm solid #000; font-size: 9pt; font-weight: 700; text-align: left; color: #333; }
+  .pr-table td { height: var(--pr-row, 9mm); padding: 0 2mm; border-bottom: 0.2mm solid #8a8f96; }
+  .pr-table .pr-no { width: 13mm; padding-right: 3.5mm; text-align: right; font-variant-numeric: tabular-nums; }
+  .pr-table td.pr-no { font-size: 10pt; color: #333; }
+  .pr-table .pr-name { width: 30mm; }
+  .pr-table.is-plain .pr-name { width: auto; }
+  .pr-table td.pr-name { font-size: 12pt; font-weight: 700; white-space: nowrap; overflow: hidden; }
+  .pr-table td.pr-name small { font-size: 8.5pt; font-weight: 600; color: #555; }
+  .pr-table .pr-memo { width: 46mm; }
+  .pr-table td.pr-memo { font-size: 9pt; line-height: 1.25; overflow: hidden; }
+  .pr-table .pr-blank { border-left: 0.2mm solid #8a8f96; }
+}
+
 /* ---------- 크게 보기 (교실 TV) ---------- */
 .big-exit { position: fixed; right: 1rem; bottom: 1rem; z-index: 40; }
 body.big .shell { grid-template-columns: minmax(0, 1fr); }
