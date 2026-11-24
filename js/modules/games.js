@@ -235,7 +235,8 @@
       pickLabel: '낱말 묶음 고르기',
       keysHelp: '키보드: Enter나 오른쪽 화살표는 다음 문제, 왼쪽 화살표는 이전 문제, 스페이스 바는 정답 보기예요.',
       noSetTitle: '낱말 묶음이 없어요',
-      noSetText: '초성 퀴즈에 쓸 낱말을 넣어 주세요.',
+      noSetText: '3~4학년 수준의 준비된 낱말 묶음을 고르거나 직접 만들어 주세요.',
+      bankTitle: '준비된 낱말 묶음',
       addLabel: '낱말 묶음 추가',
       noItemTitle: '이 묶음에 낱말이 없어요',
       noItemText: '낱말을 넣으면 바로 시작할 수 있어요.',
@@ -260,7 +261,10 @@
         return [els.word, els.answer];
       },
       show(els, word, step) {
-        els.word.textContent = CD.ko.chosung(word);
+        const c = CD.ko.chosung(word);
+        els.word.textContent = c;
+        els.word.classList.toggle('is-long', c.length > 6 && c.length <= 11);
+        els.word.classList.toggle('is-xlong', c.length > 11);
         els.answer.textContent = step >= 2 ? '정답: ' + word : step === 1 ? '첫 글자: ' + firstChar(word) : '';
       },
       say: (word) => CD.ko.chosung(word),
@@ -273,7 +277,8 @@
       pickLabel: 'OX 문제 묶음 고르기',
       keysHelp: '키보드: Enter나 오른쪽 화살표는 다음, 왼쪽 화살표는 이전, 스페이스 바는 정답 공개예요.',
       noSetTitle: 'OX 문제 묶음이 없어요',
-      noSetText: '문장마다 맞으면 O, 틀리면 X를 붙여서 문제 묶음을 만들어 주세요.',
+      noSetText: '3~4학년 수준의 준비된 문제 묶음을 고르거나 직접 만들어 주세요.',
+      bankTitle: '준비된 OX 문제 묶음',
       addLabel: '문제 묶음 추가',
       noItemTitle: '이 묶음에 문제가 없어요',
       noItemText: '문제를 넣으면 바로 시작할 수 있어요.',
@@ -331,7 +336,8 @@
       const list = sets();
       set = list.find((s) => s.id === quizMem[kind]) || list[0] || null;
       quizMem[kind] = set ? set.id : null;
-      const actions = [backBtn(), ui.btn([CD.icon('plus'), '묶음 추가'], () => edit(null), 'quiet teacher-only', { data: { fk: 'add' } })];
+      const actions = [backBtn(), ui.btn([CD.icon('plus'), '묶음 추가'], () => edit(null), 'quiet teacher-only', { data: { fk: 'add' } }),
+        ui.btn('준비된 묶음', pickBank, 'quiet teacher-only', { data: { fk: 'bank' } })];
       els.edit = ui.btn('이 묶음 고치기', () => { if (set) edit(set); }, 'quiet teacher-only', { data: { fk: 'edit' } });
       els.shuffle = ui.btn('섞기', shuffle, 'quiet teacher-only', { data: { fk: 'shuffle' } });
       if (set) actions.push(els.edit, els.shuffle);
@@ -365,7 +371,9 @@
       ready = items.length > 0;
       els.shuffle.disabled = items.length < 2;
       if (!set) {
-        els.stage.replaceChildren(ui.empty(K.noSetTitle, K.noSetText, ui.btn(K.addLabel, () => edit(null), 'primary', { data: { fk: 'empty-add' } })));
+        els.stage.replaceChildren(ui.empty(K.noSetTitle, K.noSetText, h('div', { class: 'row-btns' },
+          ui.btn('준비된 묶음 고르기', pickBank, 'primary', { data: { fk: 'empty-bank' } }),
+          ui.btn('직접 만들기', () => edit(null), '', { data: { fk: 'empty-add' } }))));
         return;
       }
       if (!items.length) {
@@ -456,6 +464,36 @@
       step = 0;
       update(true);
       ui.toast('순서를 섞었어요. 첫 문제부터 시작해요.');
+    }
+
+    /* 준비된 묶음(js/data/quiz-bank.js)에서 골라 내 묶음으로 넣기. 같은 이름의 묶음이 있으면 건너뛴다 */
+    function pickBank() {
+      const bank = (CD.quizBank && CD.quizBank[kind]) || [];
+      if (!bank.length) return;
+      const have = new Set(sets().map((s) => s.title));
+      ui.form({
+        title: K.bankTitle,
+        submit: '넣기',
+        fields: [{
+          name: 'pick', label: '넣을 묶음 (초등 3~4학년 수준)', type: 'checks', value: [], wideItems: true, wide: true,
+          options: bank.map((b, i) => ({ value: String(i), label: b.title + ' · ' + K.items(b).length + '개' + (have.has(b.title) ? ' · 넣음' : '') })),
+          hint: '넣은 묶음은 ‘이 묶음 고치기’로 마음대로 고칠 수 있어요.',
+        }],
+        onSubmit(v) {
+          const picked = v.pick.map(Number).filter((i) => bank[i]);
+          if (!picked.length) return '넣을 묶음을 하나 이상 골라 주세요.';
+          const fresh = picked.filter((i) => !have.has(bank[i].title));
+          if (!fresh.length) return '고른 묶음은 이미 들어 있어요.';
+          const added = fresh.map((i) => K.create(bank[i].title, CD.clone(K.items(bank[i]))));
+          sets().push(...added);
+          quizMem[kind] = added[0].id;
+          store.save();
+          setTimeout(() => { if (life.on) paint(); }, 0);
+          const skipped = picked.length - fresh.length;
+          ui.toast((added.length === 1 ? '‘' + added[0].title + '’ 묶음을' : added.length + '개 묶음을') + ' 넣었어요.' + (skipped ? ' 이미 있던 ' + skipped + '개는 건너뛰었어요.' : ''));
+          return true;
+        },
+      });
     }
 
     /* 묶음 만들기·고치기 */

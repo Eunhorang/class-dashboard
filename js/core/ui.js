@@ -98,7 +98,7 @@
       } else if (fd.type === 'checks') {
         // 여러 개 고르기: 학생 배정 같은 곳에 쓴다
         const picked = new Set((fd.value || []).map(String));
-        input = h('div', { class: 'check-grid', role: 'group', aria: { label: fd.label } },
+        input = h('div', { class: 'check-grid' + (fd.wideItems ? ' is-wide' : ''), role: 'group', aria: { label: fd.label } },
           (fd.options || []).map((op) => h('label', { class: 'check-item' },
             h('input', { type: 'checkbox', name: fd.name, value: op.value, checked: picked.has(String(op.value)) }),
             h('span', { text: op.label }))));
