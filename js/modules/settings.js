@@ -11,6 +11,7 @@
   const FEATURE_INFO = {
     attendance: '날마다 결석·지각·조퇴·결과, 달별로 모아 보기',
     notes: '학생마다 날짜·영역별로 쌓는 관찰 기록',
+    grades: '수행평가 3단계와 단원평가 점수 기록',
     timetable: '요일과 교시로 짠 기초시간표',
     notice: '날마다 쓰는 알림장',
     homework: '과제를 낸 학생에게 도장',
@@ -114,7 +115,7 @@
     const local = h('section', { class: 'section' },
       h('h2', { text: '자료가 저장되는 곳' }),
       h('div', { class: 'ruled', style: { 'padding-top': '0.8rem', display: 'grid', gap: '0.5rem' } },
-        h('p', { class: 'help', text: '입력한 내용은 이 컴퓨터의 브라우저에만 저장되고 밖으로 나가지 않아요. 학생 이름, 출결, 관찰 기록을 포함한 어떤 자료도 인터넷으로 보내지 않아요.' }),
+        h('p', { class: 'help', text: '입력한 내용은 이 컴퓨터의 브라우저에만 저장되고 밖으로 나가지 않아요. 학생 이름, 출결, 관찰 기록, 평가 결과를 포함한 어떤 자료도 인터넷으로 보내지 않아요.' }),
         h('p', { class: 'help small', text: '브라우저가 다른 곳으로 자료를 보내지 못하게 막아 두었어요. 자료가 이 컴퓨터를 떠나는 때는 직접 백업 파일이나 CSV 파일로 저장하거나 인쇄할 때뿐이에요.' })));
 
     const features = h('section', { class: 'section' },
@@ -138,7 +139,7 @@
     const backup = h('section', { class: 'section' },
       h('h2', { text: '백업과 복원' }),
       h('div', { class: 'ruled', style: { 'padding-top': '0.8rem', display: 'grid', gap: '0.8rem' } },
-        h('p', { class: 'help', text: '자료는 이 컴퓨터의 브라우저에만 저장돼요. 백업 파일에는 출결과 관찰 기록도 들어 있으니 안전한 곳에 두세요. 학교 컴퓨터는 다시 켜면 지워지기도 하니 일주일에 한 번쯤 백업 파일을 저장해 두세요. 다른 컴퓨터에서는 ‘백업 파일 불러오기’로 똑같이 되살려요.' }),
+        h('p', { class: 'help', text: '자료는 이 컴퓨터의 브라우저에만 저장돼요. 백업 파일에는 출결, 관찰 기록, 평가 결과도 들어 있으니 안전한 곳에 두세요. 학교 컴퓨터는 다시 켜면 지워지기도 하니 일주일에 한 번쯤 백업 파일을 저장해 두세요. 다른 컴퓨터에서는 ‘백업 파일 불러오기’로 똑같이 되살려요.' }),
         h('p', { class: 'help small', text: ago(s.meta.lastBackupAt) }),
         h('div', { class: 'row-btns' }, CD.ui.btn('백업 파일 저장', saveBackup, 'primary'), CD.ui.btn('백업 파일 불러오기', () => file.click()), file)));
 

@@ -50,6 +50,8 @@
       attendance: { log: {}, taken: {} },
       // 관찰 기록: { id, date, sids:[], cat, text, at }
       notes: [],
+      // 평가: { id, kind: 'perf'(수행평가)|'unit'(단원평가), subject, title, date, max(단원평가 만점), note, res: { 학생 id: 'top'|'good'|'fair' 또는 점수 }, at }
+      grades: [],
     };
   }
 
@@ -87,6 +89,14 @@
       { id: CD.uid(), date: pd(6), sids: [ids[0]], cat: 'study', text: '수학 시간에 분수 그림을 친구에게 차근차근 설명해 줌.', at: Date.now() },
       { id: CD.uid(), date: pd(3), sids: [ids[4], ids[9]], cat: 'friend', text: '모둠 활동에서 역할을 나누고 서로 도와 발표를 끝까지 해냄.', at: Date.now() },
       { id: CD.uid(), date: pd(1), sids: [ids[0]], cat: 'praise', text: '쉬는 시간에 바닥에 떨어진 쓰레기를 스스로 주움.', at: Date.now() },
+    ];
+    // 평가 예시: 다 적은 수행평가, 적는 중인 수행평가, 결석한 학생 하나만 빈 단원평가
+    const lv = (top, fair, upto) => Object.fromEntries(ids.slice(0, upto).map((id, i) => [id, top.includes(i) ? 'top' : fair.includes(i) ? 'fair' : 'good']));
+    const scores = [100, 95, 90, 85, 100, 70, 95, 80, 90, 100, 65, 85, 90, 95, 75, 55, 100, 85, 90, 80, 95, 60, null, 85, 90];
+    s.grades = [
+      { id: CD.uid(), kind: 'perf', subject: '국어', title: '인물의 마음 짐작하며 읽기', date: pd(8), max: 0, note: '인물의 말과 행동을 근거로 마음을 짐작해 말할 수 있다.', res: lv([0, 3, 6, 9, 13, 17, 21], [5, 15, 22], ids.length), at: Date.now() },
+      { id: CD.uid(), kind: 'perf', subject: '체육', title: '긴 줄넘기 함께 넘기', date: pd(4), max: 0, note: '', res: lv([1, 4, 8, 12], [10, 16], 18), at: Date.now() },
+      { id: CD.uid(), kind: 'unit', subject: '수학', title: '3단원 나눗셈', date: pd(2), max: 100, note: '', res: Object.fromEntries(ids.map((id, i) => [id, scores[i]]).filter(([, v]) => v != null)), at: Date.now() },
     ];
     const roleNames = ['칠판 지우기', '우유 나르기', '창문 열고 닫기', '분리수거', '책꽂이 정리', '화분에 물 주기', '불 끄기', '급식차 정리', '학습지 나눠 주기', '신발장 정리', '복도 줄 세우기', '컴퓨터 끄기'];
     s.roles.list = roleNames.map((name, i) => ({ id: CD.uid(), name, sids: [ids[i * 2], ids[i * 2 + 1]].filter(Boolean) }));
@@ -216,6 +226,17 @@
       id: idOr(x && x.id), date: isoOr(x && x.date) || D.iso(), sids: arr(x && x.sids).filter((v) => typeof v === 'string').slice(0, 60),
       cat: CATS.includes(x && x.cat) ? x.cat : 'etc', text: String((x && x.text) || '').trim().slice(0, 1000), at: Number(x && x.at) || Date.now(),
     })).filter((x) => x.text && x.sids.length);
+    const LV = ['top', 'good', 'fair'];
+    s.grades = arr(raw.grades).map((x) => {
+      const kind = x && x.kind === 'unit' ? 'unit' : 'perf';
+      const max = kind === 'unit' ? CD.clamp(Math.round(Number(x && x.max) || 100), 1, 1000) : 0;
+      const res = {};
+      for (const [sid, v] of Object.entries(obj(x && x.res))) {
+        if (kind === 'perf' && LV.includes(v)) res[sid] = v;
+        if (kind === 'unit' && v !== '' && v != null && isFinite(Number(v)) && Number(v) >= 0 && Number(v) <= max) res[sid] = Math.round(Number(v) * 10) / 10;
+      }
+      return { id: idOr(x && x.id), kind, subject: str(x && x.subject, 12), title: str(x && x.title, 40), date: isoOr(x && x.date) || D.iso(), max, note: str(x && x.note, 200), res, at: Number(x && x.at) || Date.now() };
+    }).filter((x) => x.title);
     return s;
   }
 
