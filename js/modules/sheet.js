@@ -232,7 +232,7 @@
     h('div', { class: 'tool-row' }, nav, periodSeg),
     h('div', { class: 'tool-row sheet-tools' }, h('span', { class: 'field-label', text: '넣을 것' }), partChecks),
     build(k, period, parts),
-    h('p', { class: 'help small', style: { 'margin-top': '1.2rem' }, text: '학부모 상담이나 생활기록부를 쓸 때 보세요. 인쇄하면 학생 한 명이 한 장에 나오고, ‘반 전체 인쇄’는 학생마다 새 장으로 넘어가요. 메모는 선생님만 보는 내용이라 고를 때만 넣어요.' })));
+    h('p', { class: 'help small', style: { 'margin-top': '1.2rem' }, text: '학부모 상담이나 생활기록부를 쓸 때 보세요. 인쇄하면 학생 한 명이 한 장에 나와요. ‘반 전체 인쇄’는 학생마다 새 장으로 넘어가요. 메모는 선생님만 보는 내용이라 고를 때만 넣어요.' })));
   }
 
   CD.modules.register({

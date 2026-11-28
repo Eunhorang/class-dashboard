@@ -118,7 +118,7 @@
     try { const t = new Date(JSON.parse(text).exportedAt); if (!isNaN(t)) when = CD.date.shortDate(CD.date.iso(t)) + ' ' + String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0'); } catch (e) { /* 날짜 없음 */ }
     const ok = await CD.ui.confirm({
       title: '자동 백업 파일 불러와 이어 쓰기',
-      body: '‘' + next.profile.title + '’ 자료(학생 ' + next.students.length + '명' + (when ? ', ' + when + '에 저장' : '') + ')로 바꾸고, 앞으로 바뀌는 내용을 이 파일에 이어서 저장할까요? 지금 이 컴퓨터에 있는 자료는 파일 내용으로 바뀌어요.',
+      body: '‘' + next.profile.title + '’ 자료(학생 ' + next.students.length + '명' + (when ? ', ' + when + '에 저장' : '') + ')로 바꿀까요? 앞으로 바뀌는 내용은 이 파일에 이어서 저장해요. 지금 이 컴퓨터에 있는 자료는 파일 내용으로 바뀌어요.',
       ok: '불러와 이어 쓰기',
       danger: true,
     });

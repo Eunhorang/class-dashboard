@@ -3,7 +3,7 @@
  * 한 번 열어 두면 교실 인터넷이 끊겨도 저장해 둔 화면으로 열린다.
  * 파일을 고쳐 올릴 때는 CACHE 끝 숫자와, index.html·아래 목록의 ?v= 숫자를 함께 올린다.
  */
-const CACHE = 'class-dashboard-v7';
+const CACHE = 'class-dashboard-v8';
 const FONT_CACHE = 'class-dashboard-fonts-v1';
 const ASSETS = [
   './',
@@ -16,7 +16,7 @@ const ASSETS = [
   './js/core/sound.js?v=1',
   './js/core/wheel.js?v=1',
   './js/core/ui.js?v=2',
-  './js/core/backup.js?v=1',
+  './js/core/backup.js?v=2',
   './js/core/qrcode.js?v=1',
   './js/app.js?v=2',
   './js/modules/home.js?v=3',
@@ -30,7 +30,7 @@ const ASSETS = [
   './js/modules/students.js?v=4',
   './js/modules/notes.js?v=2',
   './js/modules/grades.js?v=2',
-  './js/modules/sheet.js?v=1',
+  './js/modules/sheet.js?v=2',
   './js/modules/seats.js?v=1',
   './js/modules/budget.js?v=1',
   './js/modules/events.js?v=2',
@@ -40,7 +40,7 @@ const ASSETS = [
   './js/modules/pick.js?v=1',
   './js/modules/timer.js?v=1',
   './js/modules/qr.js?v=1',
-  './js/modules/settings.js?v=5',
+  './js/modules/settings.js?v=6',
   './js/start.js?v=1',
   './manifest.webmanifest',
   './icons/icon.svg',
