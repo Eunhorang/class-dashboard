@@ -3,13 +3,13 @@
  * 한 번 열어 두면 교실 인터넷이 끊겨도 저장해 둔 화면으로 열린다.
  * 파일을 고쳐 올릴 때는 CACHE 끝 숫자와, index.html·아래 목록의 ?v= 숫자를 함께 올린다.
  */
-const CACHE = 'class-dashboard-v9';
+const CACHE = 'class-dashboard-v10';
 const FONT_CACHE = 'class-dashboard-fonts-v1';
 const ASSETS = [
   './',
   './index.html',
   './fonts/pretendard/pretendard.css?v=1',
-  './css/style.css?v=7',
+  './css/style.css?v=8',
   './js/core/util.js?v=1',
   './js/core/korean.js?v=1',
   './js/core/store.js?v=5',

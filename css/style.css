@@ -494,10 +494,10 @@ body.big .praise-home .k, body.big .praise-home b { font-size: 1.4rem; }
 /* ---------- 조용히 신호등 (이 화면만 신호등 세 색) ---------- */
 .quiet-stage { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1.5rem 3rem; padding-top: 0.4rem; }
 .signal { display: grid; gap: 1rem; padding: 1.1rem; border-radius: 2.2rem; background: var(--ink); }
-.signal .lamp { width: clamp(5rem, 13vh, 9rem); aspect-ratio: 1; border-radius: 50%; background: #3a4048; transition: background-color 0.25s ease, box-shadow 0.25s ease; }
-.signal[data-light="red"] .lamp.red { background: #e04a3a; box-shadow: 0 0 2.2rem rgba(224, 74, 58, 0.55); }
-.signal[data-light="yellow"] .lamp.yellow { background: #f2b82a; box-shadow: 0 0 2.2rem rgba(242, 184, 42, 0.55); }
-.signal[data-light="green"] .lamp.green { background: #36a56a; box-shadow: 0 0 2.2rem rgba(54, 165, 106, 0.5); }
+.signal .lamp { width: clamp(5rem, 13vh, 9rem); aspect-ratio: 1; border-radius: 50%; background: #3a4048; border: 3px solid #2a2f36; transition: background-color 0.25s ease; }
+.signal[data-light="red"] .lamp.red { background: #e04a3a; border-color: #fff; }
+.signal[data-light="yellow"] .lamp.yellow { background: #f2b82a; border-color: #fff; }
+.signal[data-light="green"] .lamp.green { background: #36a56a; border-color: #fff; }
 .quiet-info { display: grid; gap: 1rem; }
 .signal-word { font-size: clamp(2.4rem, 6vw, 4.6rem); font-weight: 800; letter-spacing: -0.02em; }
 .meter { position: relative; height: 1.4rem; max-width: 34rem; border: 1.5px solid var(--ink); border-radius: 1rem; overflow: hidden; background: var(--paper); }
