@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <!-- 입력한 자료가 밖으로 나가지 않게 막는다: 이 주소의 파일만 읽고, 다른 곳으로는 아무것도 보내지 못한다 -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self'; manifest-src 'self'; worker-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; media-src 'self' data: blob:; connect-src 'self' https://open.neis.go.kr; manifest-src 'self'; worker-src 'self'; object-src 'none'; frame-src 'none'; base-uri 'self'; form-action 'self'">
   <title>학급 대시보드</title>
   <meta name="description" content="초등학교 학급 운영을 한 화면에: 오늘 시간표와 알림장, 과제·안내장·아침독서·1인1역·미션 체크, 학급운영비, 행사, 학습 사이트, 학급 전체 웹게임과 돌림판. 로그인 없이 쓰는 한국어 학급 대시보드예요.">
   <meta name="theme-color" content="#ffffff">
@@ -22,7 +22,7 @@
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="stylesheet" href="fonts/pretendard/pretendard.css?v=1">
-  <link rel="stylesheet" href="css/style.css?v=5">
+  <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 <body>
   <svg class="sprite" aria-hidden="true" focusable="false">
@@ -107,14 +107,16 @@
 
   <script src="js/core/util.js?v=1"></script>
   <script src="js/core/korean.js?v=1"></script>
-  <script src="js/core/store.js?v=3"></script>
+  <script src="js/core/store.js?v=4"></script>
   <script src="js/core/sound.js?v=1"></script>
   <script src="js/core/wheel.js?v=1"></script>
   <script src="js/core/ui.js?v=2"></script>
   <script src="js/core/backup.js?v=1"></script>
+  <script src="js/core/qrcode.js?v=1"></script>
   <script src="js/app.js?v=2"></script>
-  <script src="js/modules/home.js?v=2"></script>
+  <script src="js/modules/home.js?v=3"></script>
   <script src="js/modules/timetable.js?v=2"></script>
+  <script src="js/modules/meal.js?v=1"></script>
   <script src="js/modules/notice.js?v=1"></script>
   <script src="js/modules/attendance.js?v=1"></script>
   <script src="js/modules/checks.js?v=1"></script>
@@ -124,14 +126,16 @@
   <script src="js/modules/notes.js?v=2"></script>
   <script src="js/modules/grades.js?v=2"></script>
   <script src="js/modules/sheet.js?v=1"></script>
+  <script src="js/modules/seats.js?v=1"></script>
   <script src="js/modules/budget.js?v=1"></script>
-  <script src="js/modules/events.js?v=1"></script>
-  <script src="js/modules/links.js?v=1"></script>
+  <script src="js/modules/events.js?v=2"></script>
+  <script src="js/modules/links.js?v=2"></script>
   <script src="js/data/quiz-bank.js?v=1"></script>
   <script src="js/modules/games.js?v=2"></script>
   <script src="js/modules/pick.js?v=1"></script>
   <script src="js/modules/timer.js?v=1"></script>
-  <script src="js/modules/settings.js?v=4"></script>
+  <script src="js/modules/qr.js?v=1"></script>
+  <script src="js/modules/settings.js?v=5"></script>
   <script src="js/start.js?v=1"></script>
 </body>
 </html>

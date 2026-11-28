@@ -60,7 +60,7 @@
         h('a', { class: 'go', href: l.url, target: '_blank', rel: 'noopener' },
           h('span', { class: 'lt' }, l.title, CD.icon('open')),
           h('span', { class: 'lu', text: (l.memo ? l.memo + ' · ' : '') + host(l.url) })),
-        CD.ui.btn('고치기', () => edit(l), 'quiet sm'))))));
+        h('span', { class: 'row-btns' }, CD.ui.btn('QR', () => CD.showQr(l.url, l.title), 'quiet sm'), CD.ui.btn('고치기', () => edit(l), 'quiet sm')))))));
   }
 
   CD.modules.register({ id: 'links', title: '학습 사이트', group: 'manage', order: 230, render });

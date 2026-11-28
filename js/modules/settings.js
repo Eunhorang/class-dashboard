@@ -12,6 +12,9 @@
     attendance: '날마다 결석·지각·조퇴·결과, 달별로 모아 보기',
     notes: '학생마다 날짜·영역별로 쌓는 관찰 기록',
     grades: '수행평가 3단계와 단원평가 점수 기록',
+    seats: '교실 줄·칸에 맞춘 자리 배치와 무작위 자리 바꾸기',
+    qr: '주소나 글을 TV에 QR로 크게 띄우기',
+    meal: '나이스에서 받아 오는 이번 주 급식과 학사일정',
     timetable: '요일과 교시로 짠 기초시간표',
     notice: '날마다 쓰는 알림장',
     homework: '과제를 낸 학생에게 도장',
@@ -157,7 +160,20 @@
       h('h2', { text: '자료가 저장되는 곳' }),
       h('div', { class: 'ruled', style: { 'padding-top': '0.8rem', display: 'grid', gap: '0.5rem' } },
         h('p', { class: 'help', text: '입력한 내용은 이 컴퓨터의 브라우저에만 저장되고 밖으로 나가지 않아요. 학생 이름, 출결, 관찰 기록, 평가 결과를 포함한 어떤 자료도 인터넷으로 보내지 않아요.' }),
-        h('p', { class: 'help small', text: '브라우저가 다른 곳으로 자료를 보내지 못하게 막아 두었어요. 자료가 이 컴퓨터를 떠나는 때는 직접 백업 파일이나 CSV 파일로 저장하거나 인쇄할 때뿐이에요.' })));
+        h('p', { class: 'help small', text: '브라우저가 다른 곳으로 자료를 보내지 못하게 막아 두었어요. 열어 둔 곳은 급식과 학사일정을 받는 나이스 교육정보 개방 포털 한 곳이고, 학교를 고른 뒤에만 학교 코드와 날짜를 보내요. 자료가 이 컴퓨터를 떠나는 때는 직접 백업 파일이나 CSV 파일로 저장하거나 인쇄할 때뿐이에요.' })));
+
+    // 급식과 학사일정 (나이스)
+    const ne = s.neis;
+    const neis = h('section', { class: 'section' },
+      h('h2', { text: '급식과 학사일정 (나이스)' }),
+      h('div', { class: 'ruled', style: { 'padding-top': '0.8rem', display: 'grid', gap: '0.7rem' } },
+        ne.code
+          ? h('p', { class: 'help' }, h('b', { text: ne.name }), ' 급식과 학사일정을 받아 와요.' + (ne.key ? ' 인증키를 쓰고 있어요.' : ' 인증키 없이 받아요(학사일정은 한 주에 다섯 개까지).'))
+          : h('p', { class: 'help', text: '학교를 고르면 나이스 교육정보 개방 포털에서 이번 주 급식과 다가오는 학사일정을 받아 와요. 보내는 것은 학교 코드와 날짜뿐이에요.' }),
+        h('div', { class: 'row-btns' },
+          CD.ui.btn(ne.code ? '학교 바꾸기' : '학교 고르기', () => CD.neisPickSchool(), ne.code ? '' : 'primary'),
+          CD.ui.btn(ne.key ? '인증키 바꾸기' : '인증키 넣기', () => CD.neisEditKey(), 'quiet'),
+          ne.code ? CD.ui.btn('그만 받기', () => CD.neisForget(), 'quiet') : null)));
 
     const features = h('section', { class: 'section' },
       h('h2', { text: '쓰는 기능' }),
@@ -197,7 +213,7 @@
         h('p', { class: 'help', text: '로그인도 서버도 없어요. 학생 이름과 기록은 어디에도 보내지 않고 방문 기록도 모으지 않아요. 뽑기와 게임의 무작위는 브라우저의 암호용 난수로 정해요.' }),
         h('p', { class: 'help' }, h('a', { href: 'https://github.com/Eunhorang/class-dashboard', target: '_blank', rel: 'noopener', text: 'GitHub에서 소스 보기' }), ' · ', h('a', { href: 'https://eunhorang.github.io/bingle-wheel/', target: '_blank', rel: 'noopener', text: '빙글빙글 돌림판' }))));
 
-    root.append(CD.ui.page('설정', [], h('div', { class: 'settings' }, local, profile, features, sound, backup, year2, about)));
+    root.append(CD.ui.page('설정', [], h('div', { class: 'settings' }, local, profile, features, neis, sound, backup, year2, about)));
   }
 
   CD.modules.register({ id: 'settings', title: '설정', group: 'manage', order: 999, always: true, bottom: true, render });

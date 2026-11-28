@@ -54,12 +54,23 @@
     const up = all.filter((e) => D.daysFrom(e.date) >= 0);
     const past = all.filter((e) => D.daysFrom(e.date) < 0).reverse().slice(0, 10);
     const add = CD.ui.btn('행사 추가', () => edit(null), 'primary');
+    const neis = CD.neis && CD.neis.on() ? (CD.neis.ensure(), CD.neis.schedule()) : [];
+    const neisSec = CD.neis && CD.neis.on() ? h('section', { class: 'section' },
+      h('h2', { text: '학사일정 (나이스)' }),
+      neis.length ? h('ul', { class: 'items' }, neis.map((x) => h('li', null, h('div', { class: 'row' },
+        h('span', { class: 't', text: x.name }),
+        h('span', { class: 'count num' }, h('b', { text: D.dday(x.date) })),
+        h('span', { class: 'meta', text: D.longDate(x.date) + (x.end && x.end !== x.date ? ' ~ ' + D.longDate(x.end) : '') + (x.off ? ' · 휴업일' : '') })))))
+        : CD.ui.empty(CD.neis.loading() ? '학사일정을 받아 오는 중이에요' : '앞으로 8주 안의 학사일정이 없어요'),
+      h('p', { class: 'help small', style: { 'margin-top': '0.6rem' }, text: '나이스 교육정보 개방 포털에서 받아 와요. 오늘 화면의 다가오는 행사에도 ‘학사’로 함께 보여요.' })) : null;
     if (!all.length) {
+      if (neisSec) { root.append(CD.ui.page('행사', [add], neisSec)); return; }
       root.append(CD.ui.page('행사', [add], CD.ui.empty('등록된 행사가 없어요', '학교 행사와 학급 행사를 넣으면 오늘 화면에 D-day로 보여요.', CD.ui.btn('행사 추가', () => edit(null), 'primary'))));
       return;
     }
     root.append(CD.ui.page('행사', [add],
       h('section', { class: 'section' }, h('h2', { text: '다가오는 행사' }), up.length ? rows(up, false) : CD.ui.empty('다가오는 행사가 없어요')),
+      neisSec,
       past.length ? h('section', { class: 'section' }, h('h2', { text: '지난 행사' }), rows(past, true)) : null));
   }
 

@@ -53,6 +53,12 @@
       notes: [],
       // 평가: { id, kind: 'perf'(수행평가)|'unit'(단원평가), subject, title, date, max(단원평가 만점), note, res: { 학생 id: 'top'|'good'|'fair' 또는 점수 }, at }
       grades: [],
+      // 자리 배치: 줄·칸, 짝으로 붙이기, 자리마다 학생 id(앞 왼쪽부터 줄 순서), 고정·앞자리·떨어뜨릴 짝, 보는 방향
+      seats: { rows: 5, cols: 6, pair: true, cells: [], fixed: {}, front: {}, apart: [], view: 'student', at: 0 },
+      // QR 코드: 최근에 만든 것
+      qr: { recent: [] },
+      // 나이스 교육정보 개방 포털: 교육청 코드, 학교 코드, 학교 이름, 인증키(선택)
+      neis: { office: '', code: '', name: '', key: '' },
     };
   }
 
@@ -99,6 +105,9 @@
       { id: CD.uid(), kind: 'perf', subject: '체육', title: '긴 줄넘기 함께 넘기', date: pd(4), max: 0, note: '', res: lv([1, 4, 8, 12], [10, 16], 18), at: Date.now() },
       { id: CD.uid(), kind: 'unit', subject: '수학', title: '3단원 나눗셈', date: pd(2), max: 100, note: '', res: Object.fromEntries(ids.map((id, i) => [id, scores[i]]).filter(([, v]) => v != null)), at: Date.now() },
     ];
+    s.seats.cells = ids.map((_, i) => ids[(i * 7) % ids.length]);
+    s.seats.at = Date.now();
+    s.qr.recent = [{ text: 'https://primary.ebs.co.kr/', title: 'EBS 초등', at: Date.now() }];
     const roleNames = ['칠판 지우기', '우유 나르기', '창문 열고 닫기', '분리수거', '책꽂이 정리', '화분에 물 주기', '불 끄기', '급식차 정리', '학습지 나눠 주기', '신발장 정리', '복도 줄 세우기', '컴퓨터 끄기'];
     s.roles.list = roleNames.map((name, i) => ({ id: CD.uid(), name, sids: [ids[i * 2], ids[i * 2 + 1]].filter(Boolean) }));
     s.roles.log[today] = {};
@@ -233,6 +242,20 @@
       id: idOr(x && x.id), date: isoOr(x && x.date) || D.iso(), sids: arr(x && x.sids).filter((v) => typeof v === 'string').slice(0, 60),
       cat: CATS.includes(x && x.cat) ? x.cat : 'etc', text: String((x && x.text) || '').trim().slice(0, 1000), at: Number(x && x.at) || Date.now(),
     })).filter((x) => x.text && x.sids.length);
+    const se = obj(raw.seats);
+    const rows = CD.clamp(Math.round(Number(se.rows) || 5), 1, 10);
+    const cols = CD.clamp(Math.round(Number(se.cols) || 6), 1, 12);
+    const flags = (o) => { const out = {}; for (const [k, v] of Object.entries(obj(o))) if (v) out[k] = true; return out; };
+    s.seats = {
+      rows, cols, pair: se.pair !== false,
+      cells: arr(se.cells).slice(0, rows * cols).map((v) => (typeof v === 'string' ? v.slice(0, 40) : '')),
+      fixed: flags(se.fixed), front: flags(se.front),
+      apart: arr(se.apart).filter((p) => Array.isArray(p) && p.length === 2 && p.every((v) => typeof v === 'string')).slice(0, 60),
+      view: se.view === 'teacher' ? 'teacher' : 'student', at: Number(se.at) || 0,
+    };
+    s.qr = { recent: arr(obj(raw.qr).recent).map((x) => ({ text: String((x && x.text) || '').slice(0, 1000), title: str(x && x.title, 40), at: Number(x && x.at) || Date.now() })).filter((x) => x.text).slice(0, 8) };
+    const ne = obj(raw.neis);
+    s.neis = { office: str(ne.office, 4).replace(/[^A-Z0-9]/g, ''), code: str(ne.code, 12).replace(/\D/g, ''), name: str(ne.name, 40), key: str(ne.key, 64).replace(/[^A-Za-z0-9]/g, '') };
     const LV = ['top', 'good', 'fair'];
     s.grades = arr(raw.grades).map((x) => {
       const kind = x && x.kind === 'unit' ? 'unit' : 'perf';
@@ -333,6 +356,8 @@
     if (keep.roles) next.roles.list = prev.roles.list.map((r) => ({ id: CD.uid(), name: r.name, sids: [] }));
     if (keep.games) next.games = CD.clone(prev.games);
     next.prefs = CD.clone(prev.prefs);
+    next.neis = CD.clone(prev.neis);
+    next.seats = Object.assign(next.seats, { rows: prev.seats.rows, cols: prev.seats.cols, pair: prev.seats.pair, view: prev.seats.view });
     next.meta.lastBackupAt = prev.meta.lastBackupAt;
     replace(next);
   }

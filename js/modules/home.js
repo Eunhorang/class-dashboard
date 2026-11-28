@@ -169,6 +169,16 @@
       left.append(sec);
     }
 
+    // 오늘 급식 (나이스에서 받아 온 것, 학교를 골랐을 때만)
+    if (CD.neis && CD.neis.on()) {
+      CD.neis.ensure();
+      const m = CD.neis.meal(today);
+      left.append(h('section', { class: 'section' },
+        h('div', { class: 'section-head' }, h('h2', { text: '오늘 급식' }), h('a', { class: 'text-btn', href: '#/meal', text: '이번 주 급식' })),
+        m ? h('div', { class: 'meal-today ruled' }, h('p', null, m.dishes.map((d, i) => [i ? h('span', { class: 'sep', text: ' · ' }) : null, h('span', { text: d.name })])), m.kcal ? h('small', { class: 'num', text: m.kcal + ' kcal' }) : null)
+          : h('p', { class: 'help ruled', style: { padding: '0.8rem 0.25rem' }, text: CD.neis.weekLoaded(today) ? '오늘은 급식이 없어요.' : (CD.neis.error() ? '급식을 불러오지 못했어요. 인터넷 연결을 확인해 주세요.' : '급식을 받아 오는 중이에요.') })));
+    }
+
     // 학습 사이트 바로 가기
     if (store.isOn('links') && s.links.length) {
       left.append(h('section', { class: 'section' },
@@ -179,7 +189,11 @@
 
     // 다가오는 행사
     if (store.isOn('events')) {
-      const upcoming = s.events
+      // 나이스 학사일정도 함께(교사가 같은 날 같은 이름으로 넣은 행사는 하나만)
+      const neis = CD.neis && CD.neis.on() ? CD.neis.schedule()
+        .filter((x) => !s.events.some((e) => e.date === x.date && e.title === x.name))
+        .map((x) => ({ date: x.date, title: x.name + (x.end && x.end !== x.date ? ' (~' + D.shortDate(x.end, false) + ')' : ''), scope: 'neis' })) : [];
+      const upcoming = s.events.concat(neis)
         .filter((e) => { const n = D.daysFrom(e.date); return n != null && n >= 0 && n <= 60; })
         .sort((a, b) => a.date.localeCompare(b.date))
         .slice(0, 5);
@@ -189,7 +203,7 @@
         sec.append(h('ul', { class: 'ev-list' }, upcoming.map((e) => h('li', null,
           h('b', { text: D.dday(e.date) }),
           h('span', { class: 'when', text: D.shortDate(e.date) }),
-          h('span', null, e.title, h('span', { class: 'scope', text: e.scope === 'class' ? '학급' : '학교' }))))));
+          h('span', null, e.title, h('span', { class: 'scope', text: e.scope === 'class' ? '학급' : e.scope === 'neis' ? '학사' : '학교' }))))));
       } else {
         sec.append(CD.ui.empty('두 달 안에 잡힌 행사가 없어요'));
       }

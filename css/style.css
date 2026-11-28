@@ -399,6 +399,66 @@ body.big .att-corner { font-size: 1.25rem; }
   body.printing .sheet-print .table tr:hover td { background: none; }
 }
 
+/* ---------- 자리 배치 ---------- */
+.seat-room { display: grid; gap: 0.9rem; max-width: 72rem; }
+.seat-board { justify-self: center; width: min(26rem, 60%); padding: 0.45rem 1rem; border: 2px solid var(--ink); border-radius: var(--r); text-align: center; font-weight: 800; letter-spacing: 0.08em; background: var(--paper-2); }
+.seat-grid { display: grid; gap: 0.55rem; }
+.desk { display: grid; justify-items: center; align-content: center; gap: 0.05rem; min-height: 4.4rem; padding: 0.35rem; border: 1.5px solid var(--ink); border-radius: var(--r); background: var(--paper); color: var(--ink); font: inherit; cursor: pointer; }
+button.desk:hover { background: var(--paper-2); }
+.desk .no { font-size: 0.8rem; font-weight: 700; color: var(--ink-3); }
+.desk .nm { font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 100%; }
+.desk.is-empty { border-style: dashed; border-color: var(--quiet-line, #b9bfc7); }
+.desk.is-empty .nm { font-size: 0.95rem; font-weight: 600; color: var(--dim); }
+.desk.is-picked { outline: 3px solid var(--blue); outline-offset: 2px; }
+.seat-wait { margin-top: 1.1rem; display: grid; gap: 0.6rem; }
+body.big .desk { min-height: 6rem; }
+body.big .desk .nm { font-size: 2rem; }
+body.big .desk .no { font-size: 1rem; }
+body.big .seat-board { font-size: 1.3rem; }
+body.big .seat-room { max-width: none; }
+
+/* ---------- QR 코드 ---------- */
+.qr-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem); gap: 2rem; align-items: start; }
+.qr-main { display: grid; justify-items: center; }
+.qr-stage { display: grid; justify-items: center; gap: 0.5rem; width: 100%; }
+.qr-stage .qr-svg { width: min(62vh, 100%); height: auto; border: 1.5px solid var(--rule); border-radius: var(--r); }
+.qr-title { font-size: 1.6rem; font-weight: 800; text-align: center; }
+.qr-text { font-size: 0.95rem; color: var(--ink-3); text-align: center; word-break: break-all; max-width: 40rem; }
+.qr-aside { display: grid; gap: 1.4rem; }
+.qr-form { display: grid; gap: 0.7rem; padding-top: 0.8rem; border-top: 2px solid var(--ink); }
+.qr-side h2 { font-size: 1.02rem; font-weight: 800; padding-bottom: 0.45rem; border-bottom: 1.5px solid var(--ink); margin-bottom: 0.6rem; }
+.qr-recent { list-style: none; margin: 0; padding: 0; }
+.qr-recent li { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; padding: 0.3rem 0.1rem; border-bottom: 1px solid var(--rule); }
+.qr-recent .text-btn { text-align: left; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 17rem; }
+body.big .qr-layout { grid-template-columns: minmax(0, 1fr); }
+body.big .qr-stage .qr-svg { width: min(76vh, 100%); }
+body.big .qr-title { font-size: 2.4rem; }
+@media (max-width: 1100px) { .qr-layout { grid-template-columns: minmax(0, 1fr); } }
+
+/* ---------- 급식 ---------- */
+.meal-week { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 2px solid var(--ink); }
+.meal-day { padding: 0.7rem 0.75rem 1rem; border-right: 1px solid var(--rule); min-width: 0; }
+.meal-day:last-child { border-right: 0; }
+.meal-day h3 { font-size: 1rem; font-weight: 800; padding-bottom: 0.45rem; margin-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+.meal-day.is-today h3 { background: var(--ink); color: #fff; margin: -0.7rem -0.75rem 0.5rem; padding: 0.7rem 0.75rem 0.5rem; border-radius: 0 0 8px 8px; border-bottom: 0; }
+.meal-day.is-today h3 small { color: #d5d9de; }
+.meal-day ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.3rem; }
+.meal-day li { font-size: 1.08rem; font-weight: 600; line-height: 1.35; }
+.meal-day .al { font-size: 0.78rem; color: var(--ink-3); font-weight: 600; }
+.meal-day .kcal { margin-top: 0.6rem; font-size: 0.85rem; color: var(--ink-3); }
+.meal-today { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.3rem 0.9rem; padding: 0.75rem 0.25rem; }
+.meal-today p { font-size: 1.15rem; font-weight: 700; line-height: 1.55; }
+.meal-today .sep { color: var(--dim); font-weight: 400; }
+.meal-today small { color: var(--ink-3); font-size: 0.85rem; }
+body.big .meal-day li { font-size: 1.5rem; }
+body.big .meal-day h3 { font-size: 1.25rem; }
+body.big .meal-today p { font-size: 1.45rem; }
+@media (max-width: 860px) {
+  .meal-week { grid-template-columns: minmax(0, 1fr); }
+  .meal-day { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .meal-day.is-today h3 { margin: -0.7rem -0.75rem 0.5rem; }
+}
+
 /* ---------- 표 ---------- */
 .table { width: 100%; border-collapse: collapse; }
 .table th { text-align: left; font-size: 0.85rem; font-weight: 700; color: var(--ink-3); padding: 0.45rem 0.6rem; border-bottom: 2px solid var(--ink); white-space: nowrap; }
@@ -626,6 +686,21 @@ dialog { color: var(--ink); }
   .pr-table .pr-memo { width: 46mm; }
   .pr-table td.pr-memo { font-size: 9pt; line-height: 1.25; overflow: hidden; }
   .pr-table .pr-blank { border-left: 0.2mm solid #8a8f96; }
+}
+
+/* 자리 배치표 인쇄: A4 가로 한 장 */
+@page seats { size: A4 landscape; margin: 12mm; }
+@media print {
+  body.printing .seat-print { page: seats; }
+  body.printing .seat-print .pr-head { margin-bottom: 6mm; }
+  body.printing .seat-print .seat-room { max-width: none; gap: 5mm; }
+  body.printing .seat-print .seat-board { width: 90mm; padding: 2mm; font-size: 11pt; border: 0.5mm solid #000; background: #fff; }
+  body.printing .seat-print .seat-grid { gap: 3mm; }
+  body.printing .seat-print .desk { min-height: 17mm; border: 0.4mm solid #000; padding: 1.5mm; }
+  body.printing .seat-print .desk .nm { font-size: 15pt; }
+  body.printing .seat-print .desk .no { font-size: 8.5pt; color: #333; }
+  body.printing .seat-print .desk.is-empty { border: 0.3mm dashed #888; }
+  body.printing .seat-print .desk.is-empty .nm { font-size: 9pt; color: #888; }
 }
 
 /* ---------- 크게 보기 (교실 TV) ---------- */
