@@ -187,6 +187,10 @@
           s.links.slice(0, 6).map((l) => h('a', { class: 'btn quiet', href: l.url, target: '_blank', rel: 'noopener', text: l.title })))));
     }
 
+    // 칭찬 온도계 한 줄
+    const praise = CD.praiseBar ? CD.praiseBar() : null;
+    if (praise) right.append(h('section', { class: 'section praise-section' }, praise));
+
     // 다가오는 행사
     if (store.isOn('events')) {
       // 나이스 학사일정도 함께(교사가 같은 날 같은 이름으로 넣은 행사는 하나만)

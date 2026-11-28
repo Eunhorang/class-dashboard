@@ -59,6 +59,12 @@
       qr: { recent: [] },
       // 나이스 교육정보 개방 포털: 교육청 코드, 학교 코드, 학교 이름, 인증키(선택)
       neis: { office: '', code: '', name: '', key: '' },
+      // 칭찬 온도계: 반 전체가 모으는 도장. log는 이번 목표의 도장들, rounds는 지난 목표
+      praise: { goal: 30, reward: '', count: 0, log: [], rounds: [], reasons: ['정리 정돈', '조용히 이동', '모둠 협동', '인사 잘하기', '급식 예절', '친구 돕기'] },
+      // 알림장에 자주 쓰는 문장
+      noticePhrases: ['실내화 가져오기', '체육복 입고 오기', '우유갑 씻어서 가져오기', '독서록 한 편 쓰기', '알림장 부모님께 보여 드리기', '가정통신문 부모님께 드리기', '수학 익힘책 풀기', '받아쓰기 연습하기'],
+      // 조용히 신호등: 민감도(1~10)
+      quiet: { sens: 5 },
     };
   }
 
@@ -108,6 +114,9 @@
     s.seats.cells = ids.map((_, i) => ids[(i * 7) % ids.length]);
     s.seats.at = Date.now();
     s.qr.recent = [{ text: 'https://primary.ebs.co.kr/', title: 'EBS 초등', at: Date.now() }];
+    s.praise.reward = '금요일 6교시에 다 같이 영화 보기';
+    s.praise.count = 18;
+    s.praise.log = [['정리 정돈', 4], ['모둠 협동', 3], ['조용히 이동', 2]].map(([why, n], i) => ({ at: Date.now() - (i + 1) * 3600000, n, why }));
     const roleNames = ['칠판 지우기', '우유 나르기', '창문 열고 닫기', '분리수거', '책꽂이 정리', '화분에 물 주기', '불 끄기', '급식차 정리', '학습지 나눠 주기', '신발장 정리', '복도 줄 세우기', '컴퓨터 끄기'];
     s.roles.list = roleNames.map((name, i) => ({ id: CD.uid(), name, sids: [ids[i * 2], ids[i * 2 + 1]].filter(Boolean) }));
     s.roles.log[today] = {};
@@ -256,6 +265,17 @@
     s.qr = { recent: arr(obj(raw.qr).recent).map((x) => ({ text: String((x && x.text) || '').slice(0, 1000), title: str(x && x.title, 40), at: Number(x && x.at) || Date.now() })).filter((x) => x.text).slice(0, 8) };
     const ne = obj(raw.neis);
     s.neis = { office: str(ne.office, 4).replace(/[^A-Z0-9]/g, ''), code: str(ne.code, 12).replace(/\D/g, ''), name: str(ne.name, 40), key: str(ne.key, 64).replace(/[^A-Za-z0-9]/g, '') };
+    const pr = obj(raw.praise);
+    s.praise = {
+      goal: CD.clamp(Math.round(Number(pr.goal) || 30), 1, 999),
+      reward: str(pr.reward, 60),
+      count: CD.clamp(Math.round(Number(pr.count) || 0), 0, 9999),
+      log: arr(pr.log).map((x) => ({ at: Number(x && x.at) || Date.now(), n: CD.clamp(Math.round(Number(x && x.n) || 1), -99, 99), why: str(x && x.why, 30) })).slice(-500),
+      rounds: arr(pr.rounds).map((x) => ({ start: Number(x && x.start) || 0, end: Number(x && x.end) || 0, goal: Math.round(Number(x && x.goal) || 0), count: Math.round(Number(x && x.count) || 0), reward: str(x && x.reward, 60) })).slice(-30),
+      reasons: Array.isArray(pr.reasons) ? arr(pr.reasons).map((t) => str(t, 20)).filter(Boolean).slice(0, 12) : s.praise.reasons,
+    };
+    if (Array.isArray(raw.noticePhrases)) s.noticePhrases = raw.noticePhrases.map((t) => str(t, 60)).filter(Boolean).slice(0, 30);
+    s.quiet = { sens: CD.clamp(Math.round(Number(obj(raw.quiet).sens) || 5), 1, 10) };
     const LV = ['top', 'good', 'fair'];
     s.grades = arr(raw.grades).map((x) => {
       const kind = x && x.kind === 'unit' ? 'unit' : 'perf';
@@ -357,6 +377,9 @@
     if (keep.games) next.games = CD.clone(prev.games);
     next.prefs = CD.clone(prev.prefs);
     next.neis = CD.clone(prev.neis);
+    next.noticePhrases = prev.noticePhrases.slice();
+    next.praise.reasons = prev.praise.reasons.slice();
+    next.quiet = CD.clone(prev.quiet);
     next.seats = Object.assign(next.seats, { rows: prev.seats.rows, cols: prev.seats.cols, pair: prev.seats.pair, view: prev.seats.view });
     next.meta.lastBackupAt = prev.meta.lastBackupAt;
     replace(next);

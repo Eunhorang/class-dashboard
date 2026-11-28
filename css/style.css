@@ -459,6 +459,61 @@ body.big .meal-today p { font-size: 1.45rem; }
   .meal-day.is-today h3 { margin: -0.7rem -0.75rem 0.5rem; }
 }
 
+/* ---------- 칭찬 온도계 ---------- */
+.praise-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(16rem, 22rem); gap: 2rem; align-items: start; }
+.praise-stage { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1.5rem 2.5rem; padding-top: 0.4rem; }
+.thermo-wrap { position: relative; }
+.thermo { width: clamp(7rem, 16vw, 11rem); height: auto; display: block; }
+.thermo .tube { fill: var(--paper); stroke: var(--ink); stroke-width: 3; }
+.thermo .bulb-ring { fill: var(--paper); stroke: var(--ink); stroke-width: 3; }
+.thermo .mercury { fill: var(--stamp); transition: y 0.4s var(--ease-out), height 0.4s var(--ease-out); }
+.thermo .tick { stroke: var(--ink-3); stroke-width: 2; }
+.thermo-wrap .stamp-done { position: absolute; top: 30%; left: 55%; transform: rotate(-12deg) scale(1.6); }
+.praise-info { display: grid; gap: 0.9rem; align-content: center; }
+.thermo-count { font-size: clamp(3.5rem, 8vw, 6.5rem); font-weight: 800; line-height: 1; letter-spacing: -0.03em; }
+.thermo-count small { font-size: 0.4em; color: var(--ink-3); font-weight: 700; }
+.thermo-count.bump b { display: inline-block; animation: stamp-press 0.35s var(--ease-out); }
+.praise-reward { font-size: 1.3rem; font-weight: 700; color: var(--ink-2); }
+.praise-reasons .btn { font-weight: 700; }
+.praise-side h2 { font-size: 1.02rem; font-weight: 800; padding-bottom: 0.45rem; }
+.praise-home { display: grid; grid-template-columns: auto minmax(4rem, 1fr) auto; align-items: center; gap: 0.3rem 0.8rem; padding: 0.7rem 0.25rem; border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); color: var(--ink); text-decoration: none; }
+.praise-home:hover { background: var(--paper-2); }
+.praise-home .k { font-size: 1.02rem; font-weight: 800; }
+.praise-home b { font-size: 1.15rem; font-weight: 800; }
+.praise-home .r { grid-column: 1 / -1; font-size: 0.88rem; color: var(--ink-3); }
+.praise-bar { position: relative; height: 0.7rem; border: 1.5px solid var(--ink); border-radius: 1rem; overflow: hidden; background: var(--paper); }
+.praise-bar > span { position: absolute; inset: 0 auto 0 0; background: var(--stamp); }
+.praise-section { margin-bottom: 1.4rem; }
+body.big .praise-layout { grid-template-columns: minmax(0, 1fr); }
+body.big .thermo { width: clamp(9rem, 20vw, 15rem); }
+body.big .praise-reward { font-size: 1.8rem; }
+body.big .praise-home .k, body.big .praise-home b { font-size: 1.4rem; }
+@media (max-width: 1100px) { .praise-layout { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) { .praise-stage { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; } .praise-info .row-btns { justify-content: center; } }
+
+/* ---------- 조용히 신호등 (이 화면만 신호등 세 색) ---------- */
+.quiet-stage { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: center; gap: 1.5rem 3rem; padding-top: 0.4rem; }
+.signal { display: grid; gap: 1rem; padding: 1.1rem; border-radius: 2.2rem; background: var(--ink); }
+.signal .lamp { width: clamp(5rem, 13vh, 9rem); aspect-ratio: 1; border-radius: 50%; background: #3a4048; transition: background-color 0.25s ease, box-shadow 0.25s ease; }
+.signal[data-light="red"] .lamp.red { background: #e04a3a; box-shadow: 0 0 2.2rem rgba(224, 74, 58, 0.55); }
+.signal[data-light="yellow"] .lamp.yellow { background: #f2b82a; box-shadow: 0 0 2.2rem rgba(242, 184, 42, 0.55); }
+.signal[data-light="green"] .lamp.green { background: #36a56a; box-shadow: 0 0 2.2rem rgba(54, 165, 106, 0.5); }
+.quiet-info { display: grid; gap: 1rem; }
+.signal-word { font-size: clamp(2.4rem, 6vw, 4.6rem); font-weight: 800; letter-spacing: -0.02em; }
+.meter { position: relative; height: 1.4rem; max-width: 34rem; border: 1.5px solid var(--ink); border-radius: 1rem; overflow: hidden; background: var(--paper); }
+.meter-fill { position: absolute; inset: 0 auto 0 0; width: 0; background: var(--ink-2); transition: width 0.08s linear; }
+.meter .mark { position: absolute; top: 0; bottom: 0; width: 2px; background: var(--ink); }
+.meter .mark.y { left: 45%; }
+.meter .mark.r { left: 70%; }
+.quiet-time { font-size: 1.15rem; color: var(--ink-2); }
+.quiet-time b { font-size: 1.35rem; color: var(--ink); }
+.sens { display: flex; align-items: center; gap: 0.6rem; font-weight: 700; }
+.sens input[type="range"] { width: 14rem; accent-color: var(--ink); }
+.sens small { color: var(--ink-3); font-weight: 600; }
+body.big .signal .lamp { width: clamp(7rem, 22vh, 13rem); }
+body.big .signal-word { font-size: clamp(3rem, 8vw, 6.5rem); }
+@media (max-width: 640px) { .quiet-stage { grid-template-columns: minmax(0, 1fr); justify-items: center; text-align: center; } .signal { grid-auto-flow: column; } .signal .lamp { width: 5rem; } }
+
 /* ---------- 표 ---------- */
 .table { width: 100%; border-collapse: collapse; }
 .table th { text-align: left; font-size: 0.85rem; font-weight: 700; color: var(--ink-3); padding: 0.45rem 0.6rem; border-bottom: 2px solid var(--ink); white-space: nowrap; }
