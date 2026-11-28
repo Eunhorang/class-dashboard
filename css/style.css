@@ -127,7 +127,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--blue); outline: 
 .row-btns.end { justify-content: flex-end; }
 .push-left { margin-right: auto; display: flex; gap: 0.5rem; }
 
-/* ---------- 예시 안내 띠 ---------- */
+/* ---------- 예시·백업 안내 띠 ---------- */
 .sample-bar {
   display: flex;
   align-items: center;
@@ -359,6 +359,46 @@ body.big .att-corner { font-size: 1.25rem; }
 .matrix td.lv-fair { color: var(--ink-2); }
 .matrix tbody tr:hover td { background: #fafbfc; }
 
+/* ---------- 학생 한 장 ---------- */
+.sheet-nav select { width: auto; min-width: 11rem; font-weight: 700; }
+.sheet-tools { gap: 0.5rem 0.9rem; }
+.sheet-parts { display: flex; flex-wrap: wrap; flex: 1; max-height: none; }
+.sheet { max-width: 60rem; border-top: 2px solid var(--ink); }
+.sheet-head { display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.3rem 1rem; padding: 1rem 0 0.4rem; }
+.sheet-head h2 { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.02em; }
+.sheet-head h2 small { font-size: 0.95rem; color: var(--ink-3); }
+.sheet-sec { margin-top: 1.1rem; }
+.sheet-sec h3 { font-size: 1.05rem; font-weight: 800; padding-bottom: 0.4rem; border-bottom: 1.5px solid var(--ink); margin-bottom: 0.6rem; }
+.sheet-counts { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--rule); }
+.sheet-counts > div { display: grid; gap: 0.1rem; padding: 0.4rem 0.6rem 0.6rem; border-right: 1px solid var(--rule); }
+.sheet-counts > div:last-child { border-right: 0; }
+.sheet-counts span { font-size: 0.85rem; font-weight: 700; color: var(--ink-3); }
+.sheet-counts b { font-size: 1.5rem; font-weight: 800; }
+.sheet-counts small { font-size: 0.82rem; color: var(--ink-2); min-height: 1.1em; }
+.sheet-line { margin: 0.6rem 0 0.2rem; line-height: 1.6; }
+.sheet-table td, .sheet-table th { padding-top: 0.4rem; padding-bottom: 0.4rem; }
+.sheet-list { list-style: none; margin: 0; padding: 0; }
+.sheet-list li { padding: 0.45rem 0.2rem; border-bottom: 1px solid var(--rule); line-height: 1.5; }
+.sheet-notes { list-style: none; margin: 0; padding: 0; }
+.sheet-notes li { display: grid; grid-template-columns: 5.2rem auto minmax(0, 1fr); align-items: baseline; gap: 0.3rem 0.7rem; padding: 0.5rem 0.2rem; border-bottom: 1px solid var(--rule); }
+.sheet-notes .when { color: var(--ink-3); font-weight: 700; }
+.sheet-notes .kind { justify-self: start; }
+.sheet-notes p { line-height: 1.6; white-space: pre-wrap; }
+@media (max-width: 640px) {
+  .sheet-counts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .sheet-notes li { grid-template-columns: auto minmax(0, 1fr); }
+  .sheet-notes p { grid-column: 1 / -1; }
+}
+@media print {
+  body.printing .sheet-print { font-size: 10.5pt; }
+  body.printing .sheet-print .sheet { max-width: none; break-after: page; border-top: 0.6mm solid #000; }
+  body.printing .sheet-print .sheet:last-child { break-after: auto; }
+  body.printing .sheet-print .sheet-sec { break-inside: avoid; }
+  body.printing .sheet-print .sheet-notes li, body.printing .sheet-print tr { break-inside: avoid; }
+  body.printing .sheet-print .sheet-head h2 { font-size: 17pt; }
+  body.printing .sheet-print .table tr:hover td { background: none; }
+}
+
 /* ---------- 표 ---------- */
 .table { width: 100%; border-collapse: collapse; }
 .table th { text-align: left; font-size: 0.85rem; font-weight: 700; color: var(--ink-3); padding: 0.45rem 0.6rem; border-bottom: 2px solid var(--ink); white-space: nowrap; }
@@ -386,6 +426,13 @@ body.big .att-corner { font-size: 1.25rem; }
 .tt-strip .p.now span, .tt-strip .p.now i { color: #d5d9de; }
 .tt-strip.is-empty { display: block; }
 .tt-strip .p.rest b { font-size: 1.05rem; color: var(--ink-3); font-weight: 700; }
+/* 그날만 바꾼 교시: 손으로 바꾼 표시라 볼펜 파랑 */
+.tt-strip .p.chg span::after { content: " 바뀜"; color: var(--blue); font-weight: 800; }
+.tt-strip .p.chg:not(.now) b { color: var(--blue); }
+.tt-strip .p.chg.now span::after { color: #cfe0f3; }
+.tt-strip .p.chg.past b { color: var(--dim); }
+.tt-note { margin-top: 0.45rem; font-size: 0.92rem; font-weight: 700; color: var(--blue); }
+body.big .tt-note { font-size: 1.15rem; }
 .note-list { list-style: none; margin: 0; padding: 0; border-top: 2px solid var(--ink); }
 .note-list li { display: flex; gap: 0.9rem; align-items: baseline; padding: 0.7rem 0.25rem; border-bottom: 1px solid var(--rule); font-size: 1.45rem; font-weight: 600; line-height: 1.4; }
 .note-list li > span { flex: none; width: 1.1rem; font-size: 1rem; color: var(--ink-3); font-variant-numeric: tabular-nums; }
@@ -585,6 +632,9 @@ dialog { color: var(--ink); }
 .big-exit { position: fixed; right: 1rem; bottom: 1rem; z-index: 40; }
 body.big .shell { grid-template-columns: minmax(0, 1fr); }
 body.big .rail, body.big .sample-bar { display: none; }
+.backup-bar { color: var(--ink-2); font-weight: 600; }
+.auto-backup { display: grid; gap: 0.55rem; margin-top: 0.6rem; padding-top: 0.9rem; border-top: 1px solid var(--rule); }
+.auto-backup h3 { font-size: 1.02rem; font-weight: 800; }
 body.big .today-date { font-size: 2.6rem; }
 body.big .clock { font-size: 4rem; }
 body.big .motto { font-size: 1.8rem; }

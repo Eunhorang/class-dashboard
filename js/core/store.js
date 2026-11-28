@@ -32,7 +32,8 @@
       profile: { title: '우리 반', year: new Date().getFullYear() + '학년도', motto: '' },
       features: {},
       students: [],
-      timetable: { days: DAYS.slice(), periods: CD.clone(DEFAULT_PERIODS), grid },
+      // changes: 날짜별로 바꾼 시간표 { 'YYYY-MM-DD': { off: 수업 없음, row: [교시별 과목], note } }
+      timetable: { days: DAYS.slice(), periods: CD.clone(DEFAULT_PERIODS), grid, changes: {} },
       notices: [],
       homework: [],
       forms: [],
@@ -177,6 +178,12 @@
       grid[d] = s.timetable.periods.map((_, i) => str(row[i], 12));
     });
     s.timetable.grid = grid;
+    s.timetable.changes = {};
+    for (const [day, c] of Object.entries(obj(tt.changes))) {
+      if (!isoOr(day)) continue;
+      const row = arr(obj(c).row);
+      s.timetable.changes[day] = { off: !!obj(c).off, row: s.timetable.periods.map((_, i) => str(row[i], 12)), note: str(obj(c).note, 40) };
+    }
     s.notices = arr(raw.notices).map((x) => ({ id: idOr(x && x.id), date: isoOr(x && x.date), items: arr(x && x.items).map((t) => str(t, 120)).filter(Boolean).slice(0, 30) })).filter((x) => x.date);
     s.homework = checkItems(raw.homework);
     s.forms = checkItems(raw.forms);
@@ -317,7 +324,7 @@
     const next = blank();
     next.profile = { title: keep.title || prev.profile.title, year: keep.year || prev.profile.year, motto: keep.motto != null ? keep.motto : '' };
     next.features = CD.clone(prev.features);
-    if (keep.timetable) next.timetable = { days: prev.timetable.days.slice(), periods: CD.clone(prev.timetable.periods), grid: keep.timetableSubjects ? CD.clone(prev.timetable.grid) : next.timetable.grid };
+    if (keep.timetable) next.timetable = { days: prev.timetable.days.slice(), periods: CD.clone(prev.timetable.periods), grid: keep.timetableSubjects ? CD.clone(prev.timetable.grid) : next.timetable.grid, changes: {} };
     else next.timetable.periods = CD.clone(prev.timetable.periods);
     if (!keep.timetable || !keep.timetableSubjects) {
       next.timetable.days.forEach((d) => { next.timetable.grid[d] = next.timetable.periods.map(() => ''); });

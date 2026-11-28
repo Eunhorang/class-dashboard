@@ -34,6 +34,47 @@
     return '마지막 백업: ' + (days <= 0 ? '오늘' : days + '일 전') + ' (' + D.longDate(D.iso(new Date(ts))) + ')';
   }
 
+  /** 방금·n분 전·오늘 몇 시·날짜 */
+  function when(ts) {
+    if (!ts) return '';
+    const min = Math.floor((Date.now() - ts) / 60000);
+    if (min < 1) return '방금';
+    if (min < 60) return min + '분 전';
+    const t = new Date(ts);
+    if (D.iso(t) === D.iso()) return '오늘 ' + String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0');
+    return D.longDate(D.iso(t));
+  }
+
+  /** 자동 백업 파일 (크롬·엣지·웨일) */
+  function autoBackup() {
+    const B = CD.backupFile;
+    const st = B ? B.status() : { supported: false };
+    const box = h('div', { class: 'auto-backup' }, h('h3', { text: '자동 백업 파일' }));
+    if (!st.supported) {
+      box.append(h('p', { class: 'help small', text: '이 브라우저에서는 자동 백업 파일을 쓸 수 없어요. 크롬, 엣지, 웨일에서 열면 쓸 수 있어요. 그때까지는 아래 ‘백업 파일 저장’을 자주 눌러 주세요.' }));
+      return box;
+    }
+    if (st.active) {
+      box.append(...[
+        h('p', { class: 'help' }, h('b', { text: '자동 백업 중이에요. ' }), '‘' + st.name + '’에 저장해요' + (st.lastAt ? ' · 마지막 저장 ' + when(st.lastAt) : '') + '.'),
+        st.failed ? h('p', { class: 'help small', text: '마지막에 파일에 쓰지 못했어요. 파일이 옮겨졌거나 지워졌다면 새 자동 백업 파일을 다시 정해 주세요.' }) : null,
+        h('div', { class: 'row-btns' }, CD.ui.btn('지금 저장', () => B.saveNow()), CD.ui.btn('다른 파일로 바꾸기', () => B.create(), 'quiet'), CD.ui.btn('그만 쓰기', () => B.stop(), 'quiet')),
+      ].filter(Boolean));
+      return box;
+    }
+    if (st.paused) {
+      box.append(
+        h('p', { class: 'help', text: '‘' + st.name + '’에 자동 백업하다가 멈췄어요. 브라우저를 다시 켜면 쓰기를 한 번 다시 허락해야 해요.' }),
+        h('div', { class: 'row-btns' }, CD.ui.btn('이어서 저장하기', () => B.resume(), 'primary'), CD.ui.btn('그만 쓰기', () => B.stop(), 'quiet')));
+      return box;
+    }
+    box.append(
+      h('p', { class: 'help', text: '파일 하나를 정해 두면 자료가 바뀔 때마다 그 파일에 저절로 저장해요. 구글 드라이브나 원드라이브처럼 동기화되는 폴더에 두면 다른 컴퓨터에서도 같은 파일을 불러와 이어 쓸 수 있어요.' }),
+      h('p', { class: 'help small', text: '다시 켜면 자료가 지워지는 학교 컴퓨터라면 아침마다 ‘자동 백업 파일 불러와 이어 쓰기’를 눌러 그 파일에서 되살려요.' }),
+      h('div', { class: 'row-btns' }, CD.ui.btn('새 자동 백업 파일 만들기', () => B.create(), 'primary'), CD.ui.btn('자동 백업 파일 불러와 이어 쓰기', () => B.openAndContinue())));
+    return box;
+  }
+
   function saveBackup() {
     CD.download(store.backupName(), store.exportText(), 'application/json');
     store.markBackedUp();
@@ -121,7 +162,7 @@
     const features = h('section', { class: 'section' },
       h('h2', { text: '쓰는 기능' }),
       h('p', { class: 'help small', style: { 'margin-bottom': '0.6rem' }, text: '끈 기능은 목차와 오늘 화면에서 사라져요. 다시 켜면 적어 둔 자료가 그대로 나와요.' }),
-      h('ul', { class: 'feature-list' }, CD.modules.list().filter((m) => !m.always && !m.bottom).map((m) => {
+      h('ul', { class: 'feature-list' }, CD.modules.list().filter((m) => !m.always && !m.bottom && !m.hidden).map((m) => {
         const key = m.feature || m.id;
         const input = h('input', { type: 'checkbox', checked: store.isOn(key), on: { change: (e) => { s.features[key] = e.target.checked; store.save(); } } });
         return h('li', null,
@@ -141,7 +182,8 @@
       h('div', { class: 'ruled', style: { 'padding-top': '0.8rem', display: 'grid', gap: '0.8rem' } },
         h('p', { class: 'help', text: '자료는 이 컴퓨터의 브라우저에만 저장돼요. 백업 파일에는 출결, 관찰 기록, 평가 결과도 들어 있으니 안전한 곳에 두세요. 학교 컴퓨터는 다시 켜면 지워지기도 하니 일주일에 한 번쯤 백업 파일을 저장해 두세요. 다른 컴퓨터에서는 ‘백업 파일 불러오기’로 똑같이 되살려요.' }),
         h('p', { class: 'help small', text: ago(s.meta.lastBackupAt) }),
-        h('div', { class: 'row-btns' }, CD.ui.btn('백업 파일 저장', saveBackup, 'primary'), CD.ui.btn('백업 파일 불러오기', () => file.click()), file)));
+        h('div', { class: 'row-btns' }, CD.ui.btn('백업 파일 저장', saveBackup, 'primary'), CD.ui.btn('백업 파일 불러오기', () => file.click()), file),
+        autoBackup()));
 
     const year2 = h('section', { class: 'section' },
       h('h2', { text: '새 학년도' }),

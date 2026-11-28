@@ -267,7 +267,7 @@
         const pct = units.map((g) => g.res[k.id]).map((v, i) => (typeof v === 'number' ? v / units[i].max * 100 : null)).filter((v) => v != null);
         return h('tr', null,
           h('td', { class: 'nm-no', text: String(k.no) }),
-          h('td', { class: 'nm' }, h('b', { text: k.name }), k.left ? h('span', { class: 'muted', text: ' 전학' }) : null),
+          h('td', { class: 'nm' }, h('a', { href: '#/sheet/' + encodeURIComponent(k.id), title: k.name + ' 한 장 보기', on: { click: () => { CD.sheetPass = Date.now(); } } }, h('b', { text: k.name })), k.left ? h('span', { class: 'muted', text: ' 전학' }) : null),
           list.map((g) => {
             const v = g.res[k.id];
             if (v == null) return h('td', { class: 'muted', text: '·' });
@@ -276,7 +276,7 @@
           units.length ? h('td', { class: 'sc avg', text: pct.length ? one(pct.reduce((a, b) => a + b, 0) / pct.length) : '·' }) : null);
       })));
     root.append(CD.ui.page('평가 · 학생별로 보기', actions,
-      h('p', { class: 'help small', style: { 'margin-bottom': '0.8rem' }, text: '날짜 순서로 모든 평가를 모았어요. 평가 이름을 누르면 그 평가로 가요. 통지표나 생활기록부를 쓸 때 엑셀 파일로 저장해 쓰면 편해요.' }),
+      h('p', { class: 'help small', style: { 'margin-bottom': '0.8rem' }, text: '날짜 순서로 모든 평가를 모았어요. 평가 이름을 누르면 그 평가로, 학생 이름을 누르면 그 학생의 한 장 보기로 가요. 통지표나 생활기록부를 쓸 때 엑셀 파일로 저장해 쓰면 편해요.' }),
       h('div', { class: 'matrix-wrap' }, table)));
   }
 

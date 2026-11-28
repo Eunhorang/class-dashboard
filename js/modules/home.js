@@ -10,10 +10,26 @@
   const D = CD.date;
   const store = CD.store;
 
+  /** 그날 시간표: '날짜별로 바꾸기'로 바꾼 날이면 그것을, 아니면 요일 기초시간표를 쓴다.
+   *  changed는 기초시간표와 달라진 교시 번호 */
+  function dayPlan(tt, iso) {
+    const wd = D.weekday(iso);
+    const base = tt.days.includes(wd) ? tt.grid[wd] : null;
+    const ch = (tt.changes || {})[iso];
+    if (ch && ch.off) return { off: true, note: ch.note, row: null, changed: new Set(), base };
+    if (ch) {
+      const changed = new Set();
+      ch.row.forEach((v, i) => { if (!tt.periods[i].rest && ((base || [])[i] || '') !== v) changed.add(i); });
+      return { off: false, note: ch.note, row: ch.row, changed, base };
+    }
+    return { off: !base, note: '', row: base, changed: new Set(), base };
+  }
+  CD.dayPlan = dayPlan;
+
   /** 그날 쓰는 교시: 마지막 수업 뒤의 빈 교시는 뺀다. 마지막 수업 바로 뒤 점심·쉬는 시간은 남긴다.
-   *  과목을 하나도 넣지 않은 요일은 모든 교시를 그대로 둔다. */
-  function dayPeriods(tt, wd) {
-    const row = tt.grid[wd] || [];
+   *  과목을 하나도 넣지 않은 날은 모든 교시를 그대로 둔다. */
+  function dayPeriods(tt, dayRow) {
+    const row = dayRow || [];
     const ps = tt.periods.map((p, i) => ({ ...p, i }));
     let end = -1;
     ps.forEach((p) => { if (!p.rest && row[p.i]) end = p.i; });
@@ -28,9 +44,10 @@
     const today = D.iso(now);
     const wd = D.weekday(today);
     const m = now.getHours() * 60 + now.getMinutes();
-    if (!tt.days.includes(wd)) return { off: true, text: '오늘은 수업이 없는 날이에요', index: -1 };
-    const periods = dayPeriods(tt, wd).map((p) => ({ ...p, s: D.minutes(p.start), e: D.minutes(p.end) }));
-    const row = tt.grid[wd];
+    const plan = dayPlan(tt, today);
+    if (plan.off) return { off: true, text: '오늘은 수업이 없는 날이에요' + (plan.note ? ' (' + plan.note + ')' : ''), index: -1 };
+    const periods = dayPeriods(tt, plan.row).map((p) => ({ ...p, s: D.minutes(p.start), e: D.minutes(p.end) }));
+    const row = plan.row;
     const subj = (p) => (p.rest ? p.label : [p.label, row && row[p.i]].filter(Boolean).join(' '));
     const timed = periods.filter((p) => p.s != null && p.e != null);
     if (!timed.length) return { text: '', index: -1 };
@@ -129,10 +146,14 @@
     // 오늘 시간표
     if (store.isOn('timetable')) {
       refs.strip = h('div', { class: 'tt-strip' });
+      refs.ttNote = h('p', { class: 'tt-note', hidden: true });
       fillStrip(refs.strip, s, info);
       left.append(h('section', { class: 'section' },
-        h('div', { class: 'section-head' }, h('h2', { text: '오늘 시간표' }), h('a', { class: 'text-btn', href: '#/timetable', text: '시간표 보기' })),
-        refs.strip));
+        h('div', { class: 'section-head' }, h('h2', { text: '오늘 시간표' }),
+          h('span', { class: 'row-btns' },
+            CD.changeDay ? h('button', { type: 'button', class: 'text-btn teacher-only', text: '오늘만 바꾸기', on: { click: () => CD.changeDay(D.iso()) } }) : null,
+            h('a', { class: 'text-btn', href: '#/timetable', text: '시간표 보기' }))),
+        refs.strip, refs.ttNote));
     }
 
     // 알림장
@@ -200,18 +221,24 @@
   }
 
   function fillStrip(strip, s, info) {
-    const wd = D.weekday(D.iso());
-    const row = s.timetable.grid[wd];
+    const plan = dayPlan(s.timetable, D.iso());
+    const row = plan.row;
     strip.replaceChildren();
     strip.classList.toggle('is-empty', !row);
+    if (refs && refs.ttNote) {
+      const moved = Array.from(plan.changed).map((i) => s.timetable.periods[i].label + ' ' + (row[i] || '수업 없음'));
+      refs.ttNote.textContent = row && (moved.length || plan.note) ? '오늘만 바꾼 시간표예요' + (plan.note ? ' · ' + plan.note : '') + (moved.length ? ' · ' + moved.join(', ') : '') : '';
+      refs.ttNote.hidden = !refs.ttNote.textContent;
+    }
     if (!row) {
-      strip.append(h('p', { class: 'help', style: { padding: '0.9rem 0.25rem' }, text: '오늘은 수업이 없는 날이에요.' }));
+      strip.append(h('p', { class: 'help', style: { padding: '0.9rem 0.25rem' }, text: '오늘은 수업이 없는 날이에요.' + (plan.note ? ' (' + plan.note + ')' : '') }));
       return;
     }
-    dayPeriods(s.timetable, wd).forEach((p) => {
+    dayPeriods(s.timetable, row).forEach((p) => {
       const i = p.i;
       const cls = ['p'];
       if (p.rest) cls.push('rest');
+      if (plan.changed.has(i)) cls.push('chg');
       if (i === info.index && !info.waiting) cls.push('now');
       else if (info.after || (info.index >= 0 && i < info.index)) cls.push('past');
       strip.append(h('div', { class: cls.join(' ') },
@@ -222,7 +249,7 @@
     if (refs && refs.stripAt !== info.index) {
       refs.stripAt = info.index;
       requestAnimationFrame(() => {
-        const cell = strip.querySelector('.p.now') || strip.children[Math.max(0, dayPeriods(s.timetable, wd).findIndex((p) => p.i === info.index))];
+        const cell = strip.querySelector('.p.now') || strip.children[Math.max(0, dayPeriods(s.timetable, row).findIndex((p) => p.i === info.index))];
         if (cell && strip.scrollWidth > strip.clientWidth) strip.scrollLeft = Math.max(0, cell.offsetLeft - (strip.clientWidth - cell.offsetWidth) / 2);
       });
     }

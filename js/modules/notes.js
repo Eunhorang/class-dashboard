@@ -144,6 +144,7 @@
 
     root.append(CD.ui.page('학생 관찰 기록', [
       CD.ui.btn(sel ? sel.name + ' 기록 쓰기' : '기록 쓰기', () => edit(null, sel && sel.id), 'primary'),
+      sel ? CD.ui.btn(sel.name + ' 한 장 보기', () => { CD.sheetPass = Date.now(); CD.go('sheet/' + sel.id); }) : null,
       s.notes.length ? CD.ui.btn('엑셀 파일로 저장', exportCsv, 'quiet') : null,
       CD.ui.btn('가리기', () => { revealed = false; CD.refresh(); }, 'quiet'),
     ].filter(Boolean),

@@ -42,7 +42,7 @@
     els.title.textContent = s.profile.title || '우리 반';
     els.topTitle.textContent = s.profile.title || '우리 반';
     els.year.textContent = [s.profile.year, '학급 대시보드'].filter(Boolean).join(' · ');
-    const list = CD.modules.list().filter((m) => !m.bottom && CD.modules.enabled(m));
+    const list = CD.modules.list().filter((m) => !m.bottom && !m.hidden && CD.modules.enabled(m));
     const frag = document.createDocumentFragment();
     let lastGroup = null;
     for (const m of list) {
@@ -74,6 +74,7 @@
     document.title = mod.title + ' · ' + (store.state.profile.title || '학급 대시보드');
     renderNav();
     renderSampleBar();
+    if (CD.backupFile) CD.backupFile.renderBar();
     if (changed) {
       els.main.scrollTop = 0;
       document.body.classList.remove('nav-open');
@@ -106,6 +107,11 @@
     store.load();
     CD.sound.setEnabledGetter(() => store.state.prefs.sound);
     CD.ui.initToast();
+    // 자동 백업 파일: 손잡이를 꺼내 허락 상태를 보고, 설정 화면이면 다시 그린다
+    if (CD.backupFile) {
+      CD.backupFile.onChange(() => { if (current && current.id === 'settings' && !document.querySelector('dialog[open]')) render(); });
+      CD.backupFile.init();
+    }
     els = {
       title: document.getElementById('railTitle'),
       topTitle: document.getElementById('topTitle'),

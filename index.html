@@ -22,7 +22,7 @@
   <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="stylesheet" href="fonts/pretendard/pretendard.css?v=1">
-  <link rel="stylesheet" href="css/style.css?v=4">
+  <link rel="stylesheet" href="css/style.css?v=5">
 </head>
 <body>
   <svg class="sprite" aria-hidden="true" focusable="false">
@@ -71,6 +71,7 @@
         <p>지금 보이는 학생과 일정은 둘러보기용 예시예요.</p>
         <button class="text-btn" id="clearSampleBtn" type="button">예시 지우고 우리 반으로 시작하기</button>
       </div>
+      <div class="sample-bar backup-bar" id="backupBar" role="status" hidden></div>
       <main class="main" id="main" tabindex="-1"></main>
     </div>
   </div>
@@ -106,21 +107,23 @@
 
   <script src="js/core/util.js?v=1"></script>
   <script src="js/core/korean.js?v=1"></script>
-  <script src="js/core/store.js?v=2"></script>
+  <script src="js/core/store.js?v=3"></script>
   <script src="js/core/sound.js?v=1"></script>
   <script src="js/core/wheel.js?v=1"></script>
   <script src="js/core/ui.js?v=2"></script>
-  <script src="js/app.js?v=1"></script>
-  <script src="js/modules/home.js?v=1"></script>
-  <script src="js/modules/timetable.js?v=1"></script>
+  <script src="js/core/backup.js?v=1"></script>
+  <script src="js/app.js?v=2"></script>
+  <script src="js/modules/home.js?v=2"></script>
+  <script src="js/modules/timetable.js?v=2"></script>
   <script src="js/modules/notice.js?v=1"></script>
   <script src="js/modules/attendance.js?v=1"></script>
   <script src="js/modules/checks.js?v=1"></script>
   <script src="js/modules/reading.js?v=1"></script>
   <script src="js/modules/roles.js?v=1"></script>
-  <script src="js/modules/students.js?v=3"></script>
-  <script src="js/modules/notes.js?v=1"></script>
-  <script src="js/modules/grades.js?v=1"></script>
+  <script src="js/modules/students.js?v=4"></script>
+  <script src="js/modules/notes.js?v=2"></script>
+  <script src="js/modules/grades.js?v=2"></script>
+  <script src="js/modules/sheet.js?v=1"></script>
   <script src="js/modules/budget.js?v=1"></script>
   <script src="js/modules/events.js?v=1"></script>
   <script src="js/modules/links.js?v=1"></script>
@@ -128,7 +131,7 @@
   <script src="js/modules/games.js?v=2"></script>
   <script src="js/modules/pick.js?v=1"></script>
   <script src="js/modules/timer.js?v=1"></script>
-  <script src="js/modules/settings.js?v=3"></script>
+  <script src="js/modules/settings.js?v=4"></script>
   <script src="js/start.js?v=1"></script>
 </body>
 </html>

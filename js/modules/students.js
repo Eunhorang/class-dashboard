@@ -177,7 +177,7 @@
         h('td', null, h('b', { text: k.name })),
         h('td', { class: 'muted', text: k.note }),
         h('td', { text: k.left ? '전학 감' : '' , class: k.left ? 'muted' : '' }),
-        h('td', { style: { 'text-align': 'right' } }, CD.ui.btn('고치기', () => editForm(k), 'quiet sm'))))));
+        h('td', { style: { 'text-align': 'right', 'white-space': 'nowrap' } }, CD.ui.btn('한 장 보기', () => CD.go('sheet/' + k.id), 'quiet sm'), ' ', CD.ui.btn('고치기', () => editForm(k), 'quiet sm'))))));
     root.append(CD.ui.page('학생 명단', actions,
       h('p', { class: 'help', style: { 'margin-bottom': '1rem' }, text: '우리 반 ' + inClass + '명' + (list.length > inClass ? ' · 전학 ' + (list.length - inClass) + '명' : '') + '. 출결과 여러 체크, 관찰 기록, 평가, 뽑기와 게임이 모두 이 명단을 써요.' }),
       table));
